@@ -94,7 +94,6 @@ class TiltEffectManager {
     const tiltElements = document.querySelectorAll('[data-tilt]');
     
     tiltElements.forEach((element, index) => {
-      const tiltShine = element.querySelector('.tilt-shine');
       const parentGrid = element.closest('.travel-grid');
       const allGrids = document.querySelectorAll('.travel-grid');
       const gridIndex = Array.from(allGrids).indexOf(parentGrid);
