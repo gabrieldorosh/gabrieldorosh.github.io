@@ -1,3 +1,6 @@
+/* Google Fonts Import */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap');
+
 /* Reset and Base Styles */
 * {
   margin: 0;
@@ -21,8 +24,8 @@
   --shadow-button: 0 4px 15px rgba(102, 126, 234, 0.3);
   
   /* Typography */
-  --font-primary: 'Georgia', 'Times New Roman', serif;
-  --font-secondary: system-ui, -apple-system, 'Segoe UI', 'Roboto', sans-serif;
+  --font-primary: 'Poppins', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-secondary: 'Inter', system-ui, -apple-system, 'Segoe UI', 'Roboto', sans-serif;
   --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
   
   /* Spacing */
@@ -76,13 +79,13 @@ p {
   border: none;
   border-radius: var(--radius-pill);
   font-family: var(--font-secondary);
-  font-weight: 700;
+  font-weight: 600;
   font-size: 1rem;
   text-decoration: none;
   text-align: center;
   cursor: pointer;
   transition: all 0.3s ease;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.025em;
   text-transform: uppercase;
 }
 
@@ -303,6 +306,8 @@ header {
   font-size: 2.5rem;
   margin: var(--spacing-sm) 0;
   color: white;
+  font-weight: 800;
+  letter-spacing: -0.02em;
 }
 
 .hero p {
