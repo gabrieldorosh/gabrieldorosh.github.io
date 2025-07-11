@@ -81,6 +81,14 @@ class NavigationManager {
         mobileMenu.classList.remove('active');
       }
     });
+    
+    // Close menu on window resize if it gets too large
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) {
+        mobileMenuToggle.classList.remove('active');
+        mobileMenu.classList.remove('active');
+      }
+    });
   }
 }
 
