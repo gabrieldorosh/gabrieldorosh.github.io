@@ -713,6 +713,9 @@ header {
   width: 100%;
   max-width: 400px;
   min-width: 350px;
+  display: flex;
+  flex-direction: column;
+  height: auto;
 }
 
 .project-card:hover {
@@ -723,6 +726,7 @@ header {
 .project-card-image {
   height: 200px;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 .project-card-image img {
@@ -738,8 +742,10 @@ header {
 
 .project-card-content {
   padding: var(--spacing-lg);
-  position: relative;
-  padding-bottom: 5rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 300px;
 }
 
 .project-card-content h4 {
@@ -754,13 +760,11 @@ header {
   line-height: 1.6;
   color: var(--text-secondary);
   margin-bottom: var(--spacing-md);
+  flex-grow: 1;
 }
 
 .project-card-links {
-  position: absolute;
-  bottom: var(--spacing-lg);
-  left: var(--spacing-lg);
-  margin-top: 0;
+  margin-top: -13px;
 }
 
 .project-card-links a {
