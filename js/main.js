@@ -116,16 +116,8 @@ class TiltEffectManager {
       
       const originalRotation = rotationMatrix[gridIndex]?.[childIndex] || '-1.2deg';
       
-      element.addEventListener('mouseenter', () => {
-        if (tiltShine) tiltShine.style.opacity = '1';
-      });
-      
       element.addEventListener('mouseleave', () => {
         element.style.transform = `rotate(${originalRotation})`;
-        if (tiltShine) {
-          tiltShine.style.opacity = '0';
-          tiltShine.style.background = 'linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%)';
-        }
       });
       
       element.addEventListener('mousemove', (e) => {
@@ -147,20 +139,35 @@ class TiltEffectManager {
           translateZ(20px)
           scale3d(1.05, 1.05, 1.05)
         `;
-        
-        if (tiltShine) {
-          const shineX = (mouseX / rect.width) * 100 + 50;
-          const shineY = (mouseY / rect.height) * 100 + 50;
-          
-          tiltShine.style.background = `
-            radial-gradient(circle at ${shineX}% ${shineY}%, 
-              rgba(255,255,255,0.3) 0%, 
-              rgba(255,255,255,0.1) 20%, 
-              transparent 60%)
-          `;
-        }
       });
     });
+  }
+}
+
+// About Image Height Manager
+class AboutImageManager {
+  constructor() {
+    this.initImageHeight();
+  }
+
+  initImageHeight() {
+    this.adjustImageHeight();
+    window.addEventListener('resize', () => this.adjustImageHeight());
+  }
+
+  adjustImageHeight() {
+    // Only apply on desktop
+    if (window.innerWidth <= 768) return;
+    
+    const aboutText = document.querySelector('.about-text');
+    const aboutImage = document.querySelector('.about-image img');
+    
+    if (!aboutText || !aboutImage) return;
+    
+    const textHeight = aboutText.offsetHeight;
+    const maxImageHeight = Math.min(textHeight, 400);
+    
+    aboutImage.style.maxHeight = `${maxImageHeight}px`;
   }
 }
 
@@ -168,4 +175,5 @@ class TiltEffectManager {
 document.addEventListener('DOMContentLoaded', () => {
   new NavigationManager();
   new TiltEffectManager();
+  new AboutImageManager();
 });
