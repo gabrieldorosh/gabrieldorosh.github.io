@@ -96,7 +96,7 @@ class NavigationManager {
         if (headerName) {
           const link = headerName.querySelector('a');
           if (link) {
-            link.innerHTML = 'Gabriel "gabel" Dorosh';
+            link.innerHTML = 'gabel';
           }
         }
         // Always show GAMING link text
