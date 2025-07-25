@@ -7,7 +7,9 @@ class TypingAnimation {
       'Software Engineer',
       'Computer Science Student',
       'Full-Stack Developer',
-      'Problem Solver'
+      'Problem Solver',
+      'Tech Enthusiast',
+      "Hiring? Let's Connect!"
     ];
     this.currentTextIndex = 0;
     this.currentCharIndex = 0;
