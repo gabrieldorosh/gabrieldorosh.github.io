@@ -185,6 +185,23 @@ header {
   min-height: 64px;
 }
 
+body.gaming-theme header {
+  background: #121212 !important;
+  border-bottom: 1px solid #222 !important;
+}
+
+body.gaming-theme header .nav-links a,
+body.gaming-theme header .header-name a,
+body.gaming-theme header .social-icons a {
+  color: #f1f1f1 !important;
+}
+
+body.gaming-theme header .nav-links a:hover,
+body.gaming-theme header .header-name a:hover,
+body.gaming-theme header .social-icons a:hover {
+  color: #ff5500 !important;
+}
+
 #nav-placeholder {
   min-height: 32px; /* Maintain space for nav content while loading */
 }
@@ -1147,6 +1164,210 @@ header {
 .scale-in.visible {
   opacity: 1;
   transform: scale(1);
+}
+/* Secret Gaming Link */
+
+.secret-gaming-link {
+  position: relative;
+  overflow: hidden;
+}
+
+.secret-gaming-link-text {
+  opacity: 0;
+  display: inline-block;
+  background: linear-gradient(45deg, #FF5500, #F7931E, #FFD23F);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: opacity 0.5s cubic-bezier(0.4,0,0.2,1), text-shadow 0.3s;
+}
+
+.secret-gaming-link.show-gaming-text .secret-gaming-link-text,
+.secret-gaming-link:hover .secret-gaming-link-text {
+  opacity: 1 !important;
+}
+
+.secret-gaming-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.6s ease;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.secret-gaming-link-text:hover {
+  animation: text-shimmer 1.5s ease-in-out infinite;
+  background: linear-gradient(45deg, #FF5500, #F7931E, #FFD23F);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
+}
+
+.secret-gaming-link-text:hover::before {
+  left: 100%;
+}
+
+@keyframes text-shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Gaming Theme Styles */
+.gaming-theme {
+  background: #121212;
+}
+
+.gaming-hero {
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+              url('../images/cache.jpeg');
+  background-size: cover;
+  background-position: center;
+}
+
+.gaming-typing .typed-text {
+  color: #f1f1f1;
+}
+
+.gaming-stats-preview {
+  display: flex;
+  gap: var(--spacing-xl);
+  justify-content: center;
+  margin-top: var(--spacing-lg);
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  text-align: center;
+  color: #f1f1f1;
+}
+
+.stat-number {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #FF5500;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.gaming-about {
+  background: #121212;
+  color: #f1f1f1;
+}
+
+.gaming-about .about-text h3 {
+  background: linear-gradient(135deg, #FF5500 0%, #FFD23F 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gaming-about .about-text p,
+.gaming-clip p {
+  color: #a7a7a7;
+}
+
+.gaming-clips {
+  background: #060606;
+  color: #f1f1f1;
+}
+
+.gaming-clips h2,
+.gaming-links h2 {
+  color: #ff5500;
+}
+
+.gaming-clips .travel-subtitle {
+  color: #f1f1f1;
+}
+
+.gaming-clip {
+  background: #121212;
+  transition: all 0.3s ease;
+}
+
+.gaming-clip:hover {
+  border-color: #ff5500;
+  box-shadow: 0 15px 35px rgba(255, 107, 53, 0.3), 0 20px 60px rgba(255, 107, 53, 0.2);
+}
+
+/* 16:9 aspect ratio for video container */
+.clip-video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(135deg, #34495E 0%, #2C3E50 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-radius: 0.6rem;
+  margin-bottom: var(--spacing-sm);
+  overflow: hidden;
+}
+
+.clip-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.play-button {
+  font-size: 3rem;
+  color: #ff5500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.clip-info {
+  position: absolute;
+  top: var(--spacing-xs);
+  left: var(--spacing-xs);
+  right: var(--spacing-xs);
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;  
+  color: #f1f1f1;
+  font-weight: 600;
+}
+
+.map-name {
+  background: #ff5500;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-sm);
+}
+
+.clip-tag {
+  background: #202c34;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-sm);
+}
+
+.gaming-clip h4 {
+  color: #f1f1f1;
+}
+
+.gaming-links p {
+  color: #f1f1f1;
+}
+
+.gaming-links .personal-icon:hover {
+  color: #ff5500;
 }
 
 /* Staggered animations for groups */
