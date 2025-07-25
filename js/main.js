@@ -171,9 +171,74 @@ class AboutImageManager {
   }
 }
 
+// Scroll Animation Manager
+class ScrollAnimationManager {
+  constructor() {
+    this.animatedElements = [];
+    this.initScrollAnimations();
+  }
+
+  initScrollAnimations() {
+    // Create intersection observer
+    this.observer = new IntersectionObserver(
+      (entries) => this.handleIntersection(entries),
+      {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      }
+    );
+
+    // Find all elements with animation classes
+    const animationClasses = [
+      '.fade-in',
+      '.slide-up',
+      '.slide-left',
+      '.slide-right',
+      '.scale-in'
+    ];
+
+    animationClasses.forEach(className => {
+      const elements = document.querySelectorAll(className);
+      elements.forEach(element => {
+        this.observer.observe(element);
+        this.animatedElements.push(element);
+      });
+    });
+  }
+
+  handleIntersection(entries) {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        
+        // Remove animation transition after animation completes to restore original hover effects
+        // This is required to prevent hover effects from being overridden
+        setTimeout(() => {
+          if (entry.target.classList.contains('travel-destination')) {
+            entry.target.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
+          } else if (entry.target.classList.contains('project-card')) {
+            entry.target.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
+          }
+        }, 1200); // Match animation duration
+        
+        // Stop observing once animated
+        this.observer.unobserve(entry.target);
+      }
+    });
+  }
+
+  // Manually trigger animations
+  triggerAllAnimations() {
+    this.animatedElements.forEach(element => {
+      element.classList.add('visible');
+    });
+  }
+}
+
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
   new NavigationManager();
   new TiltEffectManager();
   new AboutImageManager();
+  new ScrollAnimationManager();
 });
