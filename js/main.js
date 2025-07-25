@@ -137,7 +137,7 @@ class NavigationManager {
           link.addEventListener('touchstart', function(e) {
             if (pressTimer === null) {
               pressTimer = setTimeout(() => {
-                window.location.href = '/gaming.html';
+                window.location.href = '/gaming';
               }, 1200); // 1.2s hold
             }
           });
