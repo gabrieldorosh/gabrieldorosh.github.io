@@ -285,7 +285,7 @@ header {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 100px var(--spacing-lg) var(--spacing-md);
+  padding: 80px var(--spacing-lg) var(--spacing-md);
 }
 
 .hero::before {
