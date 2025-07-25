@@ -40,7 +40,7 @@ class NavigationManager {
     const handleScroll = () => {
       const heroTop = heroSection.offsetTop;
       const heroHeight = heroSection.offsetHeight;
-      const triggerPoint = heroTop + (heroHeight * 0.55);
+      const triggerPoint = heroTop + (heroHeight * 0.5);
       const scrollPosition = window.scrollY;
       
       if (scrollPosition >= triggerPoint) {
