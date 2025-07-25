@@ -1306,6 +1306,19 @@ body.gaming-theme header .social-icons a:hover {
   box-shadow: 0 15px 35px rgba(255, 107, 53, 0.3), 0 20px 60px rgba(255, 107, 53, 0.2);
 }
 
+/* Gaming theme for mobile menu */
+body.gaming-theme .mobile-menu {
+  background: #121212 !important;
+  border-bottom: 1px solid #222 !important;
+}
+body.gaming-theme .mobile-menu a {
+  color: #f1f1f1 !important;
+}
+body.gaming-theme .mobile-menu a:hover {
+  color: #ff5500 !important;
+  background: rgba(255, 85, 0, 0.08) !important;
+}
+
 /* 16:9 aspect ratio for video container */
 .clip-video {
   width: 100%;
