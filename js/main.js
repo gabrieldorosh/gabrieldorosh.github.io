@@ -111,7 +111,6 @@ class NavigationManager {
           faceitA.href = 'https://www.faceit.com/en/players/pooey';
           faceitA.target = '_blank';
           faceitA.className = 'faceit-link shimmer-gradient';
-          faceitA.title = 'FACEIT Profile';
           faceitA.innerHTML = `
             <svg fill="url(#faceit-gradient)" width="24" height="24" viewBox="0 0 24 24" role="img" xmlns="http://www.w3.org/2000/svg">
               <defs>
@@ -126,6 +125,34 @@ class NavigationManager {
           `;
           // Insert as first child
           socialIcons.insertBefore(faceitA, socialIcons.firstChild);
+        }
+      }
+
+      // To access gaming page on mobile tap-and-hold header name
+      const headerName = document.getElementById('header-name');
+      if (headerName && window.innerWidth <= 768) {
+        let pressTimer = null;
+        const link = headerName.querySelector('a');
+        if (link) {
+          link.addEventListener('touchstart', function(e) {
+            if (pressTimer === null) {
+              pressTimer = setTimeout(() => {
+                window.location.href = '/gaming.html';
+              }, 1200); // 1.2s hold
+            }
+          });
+          link.addEventListener('touchend', function(e) {
+            if (pressTimer !== null) {
+              clearTimeout(pressTimer);
+              pressTimer = null;
+            }
+          });
+          link.addEventListener('touchmove', function(e) {
+            if (pressTimer !== null) {
+              clearTimeout(pressTimer);
+              pressTimer = null;
+            }
+          });
         }
       }
 
