@@ -1,3 +1,58 @@
+// Typing Animation for Hero Subtitle
+class TypingAnimation {
+  constructor() {
+    this.textElement = document.querySelector('.typed-text');
+    this.cursorElement = document.querySelector('.cursor');
+    this.texts = [
+      'Software Engineer',
+      'Computer Science Student',
+      'Full-Stack Developer',
+      'Problem Solver'
+    ];
+    this.currentTextIndex = 0;
+    this.currentCharIndex = 0;
+    this.isDeleting = false;
+    this.typeSpeed = 100;
+    this.deleteSpeed = 50;
+    this.pauseTime = 2000;
+    
+    if (this.textElement) {
+      this.startTyping();
+    }
+  }
+
+  startTyping() {
+    const currentText = this.texts[this.currentTextIndex];
+    
+    if (this.isDeleting) {
+      // Remove characters
+      this.textElement.textContent = currentText.substring(0, this.currentCharIndex - 1);
+      this.currentCharIndex--;
+      
+      if (this.currentCharIndex === 0) {
+        this.isDeleting = false;
+        this.currentTextIndex = (this.currentTextIndex + 1) % this.texts.length;
+        setTimeout(() => this.startTyping(), 200);
+        return;
+      }
+      
+      setTimeout(() => this.startTyping(), this.deleteSpeed);
+    } else {
+      // Add characters
+      this.textElement.textContent = currentText.substring(0, this.currentCharIndex + 1);
+      this.currentCharIndex++;
+      
+      if (this.currentCharIndex === currentText.length) {
+        this.isDeleting = true;
+        setTimeout(() => this.startTyping(), this.pauseTime);
+        return;
+      }
+      
+      setTimeout(() => this.startTyping(), this.typeSpeed);
+    }
+  }
+}
+
 // Navigation and Mobile Menu Management
 class NavigationManager {
   constructor() {
@@ -237,6 +292,7 @@ class ScrollAnimationManager {
 
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+  new TypingAnimation();
   new NavigationManager();
   new TiltEffectManager();
   new AboutImageManager();

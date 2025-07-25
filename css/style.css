@@ -336,6 +336,37 @@ header {
   color: white;
 }
 
+/* Typing Animation */
+.typing-text {
+  display: block;
+  min-height: 1.5em;
+  width: 100%;
+  text-align: center;
+}
+
+.typed-text {
+  display: inline;
+}
+
+.cursor {
+  display: inline-block;
+  background-color: white;
+  margin-left: 1px;
+  width: 2px;
+  height: 1.2em;
+  vertical-align: text-top;
+  animation: blink 1s infinite;
+}
+
+.cursor::before {
+  content: '';
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
 /* About Section */
 .about {
   width: 100%;
