@@ -21,12 +21,12 @@ class TypingAnimation {
       ];
     } else {
       this.texts = [
-        'Software Engineer',
+        'Junior Software Developer',
         'Computer Science Student',
-        'Full-Stack Developer',
-        'Problem Solver',
-        'Tech Enthusiast',
-        "Hiring? Let's Connect!"
+        'Data-Focused Builder',
+        'Full-Stack Projects',
+        'CS2 Analytics Project',
+        "Open to Graduate Roles"
       ];
     }
     this.currentTextIndex = 0;
