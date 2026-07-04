@@ -3,15 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My Projects – Gabriel Dorosh</title>
-  
+  <meta name="description" content="Projects by Gabriel Dorosh, including CS2 predictive analytics, full-stack rental software, Flask applications and portfolio development." />
+  <title>Projects | Gabriel Dorosh</title>
+
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
-  
+
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -21,81 +22,88 @@
 
   <section class="projects-hero">
     <div class="projects-hero-content">
-      <h1>My Projects</h1>
-      <p>A collection of applications and tools I've built over my time studying computer science</p>
+      <h1>Projects</h1>
+      <p>Software, data and web projects that show how I approach real problems, technical trade-offs and user-focused development.</p>
     </div>
   </section>
 
   <main class="projects-main">
     <div class="projects-container">
-      <!-- Featured Project -->
       <div class="featured-project slide-up">
-        <div class="project-image">
-          <img src="images/project_one.png" alt="Rental App Screenshot">
+        <div class="project-image" style="display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;text-align:center;padding:2rem;min-height:360px;">
+          <div>
+            <p style="letter-spacing:0.2em;text-transform:uppercase;margin-bottom:0.75rem;opacity:0.85;">Final Year Project</p>
+            <h2 style="color:white;margin-bottom:0.75rem;">CS2 Predictive Analytics</h2>
+            <p style="color:white;margin:0;opacity:0.9;">Machine learning applied to Counter-Strike player performance</p>
+          </div>
         </div>
         <div class="project-details">
           <span class="project-tag">Featured Project</span>
-          <h2>Rental Management App</h2>
-          <p>A comprehensive full-stack rental application for both renters and owners that seamlessly syncs with major platforms like Airbnb and VRBO. Built with React, Node.js, and MongoDB to provide property renters and owners with a centralized dashboard for managing bookings, pricing, and communications.</p>
+          <h2>Counter-Strike Player Performance Prediction</h2>
+          <p>My final year project focuses on predictive analysis of Counter-Strike player statistics. The aim was to use historical player and match data to predict whether a player is likely to perform well in their next game, producing a result that is both technically interesting and understandable to esports fans.</p>
+          <p>The project gave me practical experience with data cleaning, feature engineering, model selection, evaluation and explaining model performance in a real domain rather than a generic classroom dataset.</p>
           <div class="tech-stack">
-            <span class="tech-tag">React</span>
-            <span class="tech-tag">Node.js</span>
-            <span class="tech-tag">MongoDB</span>
-            <span class="tech-tag">API Integration</span>
+            <span class="tech-tag">Python</span>
+            <span class="tech-tag">Machine Learning</span>
+            <span class="tech-tag">Data Analysis</span>
+            <span class="tech-tag">Feature Engineering</span>
+            <span class="tech-tag">CS2</span>
           </div>
           <div class="project-links">
-            <a href="https://maidenhead-central.vercel.app/" target="_blank" class="btn btn-outline">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M15 3h6v6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M10 14L21 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              Live Demo
-            </a>
-            <a href="https://github.com/gabrieldorosh/maidenhead_central" target="_blank" class="btn btn-secondary">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              View Code
-            </a>
+            <span class="btn btn-outline" style="cursor:default;">University Project</span>
+            <a href="mailto:gabriel@dorosh.co.uk?subject=CS2%20Analytics%20Project" class="btn btn-secondary">Ask About It</a>
           </div>
         </div>
       </div>
 
-      <!-- Other Projects Grid -->
       <div class="projects-grid">
         <h3 class="fade-in">Other Projects</h3>
-        
+
         <div class="project-card slide-up stagger-delay-1">
           <div class="project-card-image">
-            <img src="images/project_two.png" alt="QR Code Generator">
+            <img src="images/project_one.png" alt="Rental management app screenshot">
           </div>
           <div class="project-card-content">
-            <h4>QR Code Generator</h4>
-            <p>A simple QR code generator built with Python and Flask. Features a web interface for custom QR codes with various formatting options.</p>
+            <h4>Rental Management App</h4>
+            <p>A full-stack rental management platform designed around listings, reservations and owner workflows. This project helped me practise building a larger application with authentication, database modelling, reusable UI, deployment and external integrations.</p>
             <div class="tech-stack">
-              <span class="tech-tag">Python</span>
-              <span class="tech-tag">Flask</span>
-              <span class="tech-tag">HTML/CSS</span>
+              <span class="tech-tag">React</span>
+              <span class="tech-tag">Node.js</span>
+              <span class="tech-tag">MongoDB</span>
+              <span class="tech-tag">API Integration</span>
             </div>
             <div class="project-card-links">
-              <a href="https://github.com/gabrieldorosh/QR-Code-Generator" target="_blank" class="btn btn-secondary">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                View Code
-              </a>
+              <a href="https://maidenhead-central.vercel.app/" target="_blank" class="btn btn-outline">Live Demo</a>
+              <a href="https://github.com/gabrieldorosh/maidenhead_central" target="_blank" class="btn btn-secondary">View Code</a>
             </div>
           </div>
         </div>
 
         <div class="project-card slide-up stagger-delay-2">
           <div class="project-card-image">
-            <img src="images/project_three.png" alt="Personal Website">
+            <img src="images/project_two.png" alt="QR code generator screenshot">
+          </div>
+          <div class="project-card-content">
+            <h4>QR Code Generator</h4>
+            <p>A Python and Flask application for generating custom QR codes through a simple web interface. It demonstrates clean routing, input handling, template rendering and packaging a small tool into a usable interface.</p>
+            <div class="tech-stack">
+              <span class="tech-tag">Python</span>
+              <span class="tech-tag">Flask</span>
+              <span class="tech-tag">HTML/CSS</span>
+            </div>
+            <div class="project-card-links">
+              <a href="https://github.com/gabrieldorosh/QR-Code-Generator" target="_blank" class="btn btn-secondary">View Code</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card slide-up stagger-delay-3">
+          <div class="project-card-image">
+            <img src="images/project_three.png" alt="Personal portfolio website screenshot">
           </div>
           <div class="project-card-content">
             <h4>Personal Portfolio Website</h4>
-            <p>A responsive portfolio showcasing my projects. Built with HTML, CSS, and JavaScript. For the live demo just press home in the top left!</p>
+            <p>A responsive portfolio built with HTML, CSS and JavaScript, hosted through GitHub Pages. I use it to present projects clearly, practise front-end polish and keep my professional profile easy to share.</p>
             <div class="tech-stack">
               <span class="tech-tag">HTML5</span>
               <span class="tech-tag">CSS3</span>
@@ -103,12 +111,7 @@
               <span class="tech-tag">GitHub Pages</span>
             </div>
             <div class="project-card-links">
-              <a href="https://github.com/gabrieldorosh/gabrieldorosh.github.io" target="_blank" class="btn btn-secondary">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                View Code
-              </a>
+              <a href="https://github.com/gabrieldorosh/gabrieldorosh.github.io" target="_blank" class="btn btn-secondary">View Code</a>
             </div>
           </div>
         </div>
