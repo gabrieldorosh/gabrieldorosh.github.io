@@ -1,0 +1,48 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  screen: {
+    image?: any;
+    label: string;
+    alt: string;
+    caption?: string;
+  };
+  accent?: string;
+  index?: number;
+}
+
+const { screen, accent = "#667eea", index = 0 } = Astro.props;
+---
+
+<figure class="phone-figure" style={`--phone-accent: ${accent}`} data-reveal>
+  <div class="iphone">
+    <span class="iphone__action" aria-hidden="true"></span>
+    <span class="iphone__volume iphone__volume--up" aria-hidden="true"></span>
+    <span class="iphone__volume iphone__volume--down" aria-hidden="true"></span>
+    <span class="iphone__camera" aria-hidden="true"></span>
+    <div class="iphone__screen">
+      {
+        screen.image ? (
+          <Image
+            src={screen.image}
+            alt={screen.alt}
+            widths={[360, 520, 720]}
+            sizes="(max-width: 700px) 72vw, 25vw"
+            loading="lazy"
+          />
+        ) : (
+          <div class="iphone__placeholder">
+            <span>0{index + 1}</span>
+            <strong>{screen.label}</strong>
+            <small>Mobile interface preview</small>
+          </div>
+        )
+      }
+    </div>
+  </div>
+  <figcaption>
+    <strong>{screen.label}</strong>
+    {screen.caption && <span>{screen.caption}</span>}
+  </figcaption>
+</figure>

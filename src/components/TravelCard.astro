@@ -1,0 +1,48 @@
+---
+import { Image, type ImageMetadata } from "astro:assets";
+
+interface Props {
+  image: ImageMetadata;
+  title: string;
+  date: string;
+  description?: string;
+  alt: string;
+  rotation?: number;
+  index?: number;
+  focusable?: boolean;
+}
+
+const {
+  image,
+  title,
+  date,
+  description,
+  alt,
+  rotation = 0,
+  index = 0,
+  focusable = false,
+} = Astro.props;
+---
+
+<article
+  class="travel-card"
+  style={`--rotation: ${rotation}deg; --card-index: ${index % 3}`}
+  tabindex={focusable ? "0" : undefined}
+>
+  <div class="travel-card__photo">
+    <Image
+      src={image}
+      alt={alt}
+      widths={[360, 540, 720]}
+      sizes="(max-width: 640px) 82vw, (max-width: 1000px) 44vw, 29vw"
+      loading="lazy"
+    />
+  </div>
+  <div class="travel-card__copy">
+    <div class="travel-card__caption">
+      <h3>{title}</h3>
+      <span>{date}</span>
+    </div>
+    {description && <p>{description}</p>}
+  </div>
+</article>

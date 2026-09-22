@@ -1,0 +1,240 @@
+---
+import { ArrowLeft, Download, ExternalLink } from "@lucide/astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+
+const reportPath = "/downloads/degree-project-report.pdf";
+
+const previewPages = [
+  {
+    src: "/downloads/degree-project-report-cover.png",
+    alt: "Cover of Gabriel Dorosh's degree project report",
+    label: "Cover",
+    page: "Page 1",
+  },
+  {
+    src: "/downloads/degree-project-report-abstract.png",
+    alt: "Abstract page from Gabriel Dorosh's degree project report",
+    label: "Abstract",
+    page: "Page 3",
+  },
+  {
+    src: "/downloads/degree-project-report-methodology.png",
+    alt: "Methodology page showing the predictive-analysis research pipeline",
+    label: "Methodology and pipeline",
+    page: "Page 19",
+  },
+];
+---
+
+<BaseLayout
+  title="Counter-Strike Predictive Analysis Report"
+  description="Read Gabriel Dorosh's degree project report on leakage-aware machine learning for predicting professional Counter-Strike player-map performance."
+>
+  <section class="page-hero report-hero">
+    <div class="container">
+      <a class="report-hero__breadcrumb" href="/projects/predictive-analysis/">
+        <ArrowLeft aria-hidden="true" size={15} stroke-width={2} />
+        Back to case study
+      </a>
+
+      <div class="page-hero__inner">
+        <div data-reveal>
+          <p class="eyebrow">Degree project report / 2026</p>
+          <h1>Counter-Strike Player Performance Prediction</h1>
+        </div>
+
+        <div class="page-hero__aside" data-reveal style="--card-index: 1">
+          <p>
+            This report examines whether historical HLTV statistics can predict a
+            professional player's performance on an upcoming Counter-Strike map. It
+            documents the data pipeline, leakage controls, model comparisons, and the
+            limits of the final result.
+          </p>
+          <div class="report-hero__actions">
+            <a
+              class="button button--primary"
+              href={reportPath}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Open PDF
+              <ExternalLink aria-hidden="true" size={15} stroke-width={2} />
+            </a>
+            <a class="button button--secondary" href={reportPath} download>
+              Download PDF
+              <Download aria-hidden="true" size={15} stroke-width={2} />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="report-page">
+    <div class="container">
+      <header class="report-page__heading" data-reveal>
+        <div>
+          <p class="eyebrow">Selected pages</p>
+          <h2>A quick route through the research</h2>
+        </div>
+        <p>
+          The cover introduces the research question, the abstract summarises the
+          dataset and findings, and the methodology page shows how raw public data
+          became a chronological evaluation pipeline. Open the full report for the
+          complete analysis, results, and limitations.
+        </p>
+      </header>
+
+      <div class="report-pages" role="group" aria-label="Selected report-page previews">
+        {
+          previewPages.map((preview, index) => (
+            <figure class="report-preview" data-reveal style={`--card-index: ${index}`}>
+              <a
+                href={`${reportPath}#page=${preview.page.replace("Page ", "")}`}
+                target="_blank"
+                rel="noopener"
+                aria-label={`${preview.label}, ${preview.page} — open in the full PDF`}
+              >
+                <img
+                  src={preview.src}
+                  alt={preview.alt}
+                  width="1191"
+                  height="1684"
+                  loading={index === 0 ? "eager" : "lazy"}
+                />
+              </a>
+              <figcaption>
+                <strong>{preview.label}</strong>
+                <span>{preview.page}</span>
+              </figcaption>
+            </figure>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .report-hero__breadcrumb {
+    display: inline-flex;
+    gap: 0.45rem;
+    align-items: center;
+    margin-bottom: clamp(2rem, 4vw, 3.5rem);
+    color: var(--muted);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .report-hero__breadcrumb:hover,
+  .report-hero__breadcrumb:focus-visible {
+    color: var(--ink);
+  }
+
+  .report-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin-top: 1.4rem;
+  }
+
+  .report-page {
+    padding: clamp(4rem, 8vw, 7rem) 0 clamp(5rem, 10vw, 9rem);
+    background: var(--surface);
+  }
+
+  .report-page__heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(17rem, 0.85fr);
+    gap: clamp(2rem, 7vw, 6rem);
+    align-items: end;
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .report-page__heading h2 {
+    max-width: 16ch;
+    margin-bottom: 0;
+  }
+
+  .report-page__heading > p {
+    max-width: 34rem;
+    margin-bottom: 0;
+  }
+
+  .report-pages {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1rem, 2.5vw, 2rem);
+    align-items: start;
+  }
+
+  .report-preview {
+    margin: 0;
+  }
+
+  .report-preview a {
+    display: block;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 0.35rem;
+    background: #fff;
+    box-shadow: var(--shadow-sm);
+    transition:
+      transform 240ms var(--ease-out),
+      box-shadow 240ms ease;
+  }
+
+  .report-preview a:hover,
+  .report-preview a:focus-visible {
+    transform: translateY(-0.3rem);
+    box-shadow: var(--shadow-md);
+  }
+
+  .report-preview img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .report-preview figcaption {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    padding: 0.85rem 0.15rem 0;
+    color: var(--muted);
+    font-size: 0.72rem;
+  }
+
+  .report-preview figcaption strong {
+    color: var(--ink);
+  }
+
+  @media (max-width: 800px) {
+    .report-page__heading {
+      grid-template-columns: 1fr;
+    }
+
+    .report-pages {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 560px) {
+    .report-hero__actions,
+    .report-hero__actions .button {
+      width: 100%;
+    }
+
+    .report-pages {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .report-preview a {
+      transition: none;
+    }
+  }
+</style>

@@ -1,0 +1,534 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  projects: CollectionEntry<"projects">[];
+}
+
+const { projects } = Astro.props;
+const projectHref = (id: string) => `/projects/${id}/`;
+const projectNumber = (index: number) => String(index + 1).padStart(2, "0");
+---
+
+<div class="adaptive-projects" data-project-index>
+  <div class="adaptive-projects__preview" aria-hidden="true">
+    {
+      projects.map((project, index) => (
+        <figure
+          class:list={[
+            "project-preview",
+            {
+              "is-active": index === 0,
+              "is-contain": project.data.coverFit === "contain",
+            },
+          ]}
+          data-project-preview={index}
+          style={`--project-accent: ${project.data.accent}`}
+        >
+          {project.data.cover ? (
+            <Image
+              src={project.data.cover}
+              alt=""
+              widths={[640, 960, 1280]}
+              sizes="(min-width: 1024px) 55vw, 1px"
+              loading={index === 0 ? "eager" : "lazy"}
+            />
+          ) : (
+            <div class="project-visual-fallback">
+              <span>{projectNumber(index)}</span>
+              <strong>{project.data.shortTitle}</strong>
+            </div>
+          )}
+          {project.data.cover && (
+            <figcaption>
+              <span>{projectNumber(index)}</span>
+              <strong>{project.data.shortTitle}</strong>
+            </figcaption>
+          )}
+        </figure>
+      ))
+    }
+  </div>
+
+  <ol class="adaptive-projects__list">
+    {
+      projects.map((project, index) => (
+        <li>
+          <article
+            class="project-entry"
+            data-project-trigger={index}
+            data-active={index === 0 ? "true" : "false"}
+            style={`--project-accent: ${project.data.accent}`}
+          >
+            <div
+              class:list={[
+                "project-entry__media",
+                { "is-contain": project.data.coverFit === "contain" },
+              ]}
+            >
+              {project.data.cover ? (
+                <Image
+                  src={project.data.cover}
+                  alt={`${project.data.title} project preview`}
+                  widths={[480, 720, 1080]}
+                  sizes="(max-width: 700px) calc(100vw - 3rem), (max-width: 1023px) 48vw, 1px"
+                  loading={index === 0 ? "eager" : "lazy"}
+                />
+              ) : (
+                <div class="project-visual-fallback" aria-hidden="true">
+                  <span>{projectNumber(index)}</span>
+                  <strong>{project.data.shortTitle}</strong>
+                </div>
+              )}
+            </div>
+
+            <div class="project-entry__body">
+              <span class="project-entry__number" aria-hidden="true">
+                {projectNumber(index)}
+              </span>
+              <div class="project-entry__copy">
+                <p class="project-entry__meta">{project.data.type} <span>·</span> {project.data.year}</p>
+                <h2>
+                  <a
+                    class="project-entry__link"
+                    href={projectHref(project.id)}
+                    aria-label={`View the ${project.data.title} case study`}
+                  >
+                    {project.data.title}
+                  </a>
+                </h2>
+                <p class="project-entry__summary">{project.data.summary}</p>
+                <p class="project-entry__role">{project.data.role}</p>
+              </div>
+              <span class="project-entry__action" aria-hidden="true">
+                <span class="project-entry__action-short">View</span>
+                <span class="project-entry__action-long">View case study</span>
+              </span>
+            </div>
+          </article>
+        </li>
+      ))
+    }
+  </ol>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-project-index]").forEach((indexRoot) => {
+    const previews = Array.from(
+      indexRoot.querySelectorAll<HTMLElement>("[data-project-preview]"),
+    );
+    const triggers = Array.from(
+      indexRoot.querySelectorAll<HTMLElement>("[data-project-trigger]"),
+    );
+
+    const selectProject = (selectedIndex: string | undefined) => {
+      if (selectedIndex === undefined) return;
+
+      previews.forEach((preview) => {
+        preview.classList.toggle(
+          "is-active",
+          preview.dataset.projectPreview === selectedIndex,
+        );
+      });
+
+      triggers.forEach((trigger) => {
+        trigger.dataset.active = String(
+          trigger.dataset.projectTrigger === selectedIndex,
+        );
+      });
+    };
+
+    triggers.forEach((trigger) => {
+      trigger.addEventListener("pointerenter", () => {
+        selectProject(trigger.dataset.projectTrigger);
+      });
+      trigger.addEventListener("focusin", () => {
+        selectProject(trigger.dataset.projectTrigger);
+      });
+    });
+  });
+</script>
+
+<style>
+  .adaptive-projects {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(24rem, 0.85fr);
+    align-items: start;
+    gap: clamp(2rem, 6vw, 5rem);
+  }
+
+  .adaptive-projects__preview {
+    position: sticky;
+    top: calc(var(--header-height) + 2rem);
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 1.25rem;
+    background: var(--surface);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .project-preview {
+    --project-accent-ink: color-mix(in srgb, var(--project-accent) 65%, var(--ink));
+
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.985);
+    transition:
+      opacity 240ms ease,
+      transform 420ms var(--ease-out);
+  }
+
+  .project-preview.is-active {
+    z-index: 1;
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .project-preview :global(picture) {
+    display: contents;
+  }
+
+  .project-preview :global(img),
+  .project-entry__media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .project-preview.is-contain :global(img),
+  .project-entry__media.is-contain :global(img) {
+    object-fit: contain;
+  }
+
+  .project-preview figcaption {
+    position: absolute;
+    z-index: 2;
+    right: 1rem;
+    bottom: 1rem;
+    left: 1rem;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid color-mix(in srgb, var(--line) 60%, transparent);
+    border-radius: 0.7rem;
+    background: color-mix(in srgb, var(--surface) 88%, transparent);
+    box-shadow: 0 8px 24px rgba(24, 24, 32, 0.12);
+    backdrop-filter: blur(12px);
+  }
+
+  .project-preview figcaption span,
+  .project-visual-fallback span {
+    color: var(--project-accent-ink);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+  }
+
+  .project-preview figcaption strong {
+    font-size: 0.82rem;
+  }
+
+  .project-visual-fallback {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: clamp(1.4rem, 4vw, 3rem);
+    background:
+      linear-gradient(
+        145deg,
+        color-mix(in srgb, var(--project-accent) 18%, var(--surface)),
+        var(--surface) 68%
+      );
+  }
+
+  .project-visual-fallback strong {
+    max-width: 12ch;
+    font-family: var(--font-display);
+    font-size: clamp(1.7rem, 4vw, 3.6rem);
+    letter-spacing: -0.05em;
+    line-height: 1;
+  }
+
+  .adaptive-projects__list {
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--line);
+    list-style: none;
+  }
+
+  .project-entry {
+    --project-accent-ink: color-mix(in srgb, var(--project-accent) 65%, var(--ink));
+
+    position: relative;
+    min-height: 7.5rem;
+    padding: 1.2rem 0.25rem;
+    border-bottom: 1px solid var(--line);
+    transition:
+      color 180ms ease,
+      background-color 180ms ease;
+  }
+
+  .project-entry:focus-within {
+    outline: 3px solid var(--project-accent-ink);
+    outline-offset: 3px;
+  }
+
+  .project-entry__media {
+    display: none;
+    overflow: hidden;
+    background: var(--surface);
+  }
+
+  .project-entry__body {
+    display: grid;
+    grid-template-columns: 2.5rem minmax(0, 1fr) auto;
+    gap: 0.8rem;
+    align-items: center;
+  }
+
+  .project-entry__number {
+    align-self: start;
+    padding-top: 0.28rem;
+    color: var(--muted);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+  }
+
+  .project-entry__copy {
+    display: grid;
+    min-width: 0;
+    gap: 0.45rem;
+  }
+
+  .project-entry__meta,
+  .project-entry__summary,
+  .project-entry__role,
+  .project-entry h2 {
+    margin: 0;
+  }
+
+  .project-entry__meta {
+    color: var(--muted);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 1.35;
+    text-transform: uppercase;
+  }
+
+  .project-entry__meta span {
+    margin-inline: 0.25rem;
+    color: var(--project-accent-ink);
+  }
+
+  .project-entry h2 {
+    font-size: clamp(1.15rem, 2vw, 1.8rem);
+    text-wrap: balance;
+  }
+
+  .project-entry__link {
+    text-decoration: none;
+  }
+
+  .project-entry__link::after {
+    position: absolute;
+    z-index: 2;
+    inset: 0;
+    content: "";
+  }
+
+  .project-entry__link:focus-visible {
+    outline: 0;
+  }
+
+  .project-entry__summary,
+  .project-entry__role {
+    display: none;
+  }
+
+  .project-entry__action {
+    color: var(--muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    white-space: nowrap;
+    text-decoration: underline;
+    text-decoration-color: var(--line-strong);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.3em;
+  }
+
+  .project-entry__action-long {
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    .project-entry::before {
+      position: absolute;
+      top: 0.9rem;
+      bottom: 0.9rem;
+      left: 0;
+      width: 2px;
+      border-radius: 999px;
+      background: var(--project-accent);
+      content: "";
+      transform: scaleY(0);
+      transition: transform 220ms var(--ease-out);
+    }
+
+    .project-entry:hover,
+    .project-entry:focus-within,
+    .project-entry[data-active="true"] {
+      background: color-mix(in srgb, var(--project-accent) 4%, transparent);
+    }
+
+    .project-entry:hover::before,
+    .project-entry:focus-within::before,
+    .project-entry[data-active="true"]::before {
+      transform: scaleY(1);
+    }
+
+    .project-entry:hover .project-entry__link,
+    .project-entry:focus-within .project-entry__link,
+    .project-entry[data-active="true"] .project-entry__link,
+    .project-entry:hover .project-entry__action,
+    .project-entry:focus-within .project-entry__action,
+    .project-entry[data-active="true"] .project-entry__action {
+      color: var(--project-accent-ink);
+    }
+  }
+
+  @media (max-width: 1023px) {
+    .adaptive-projects {
+      display: block;
+    }
+
+    .adaptive-projects__preview {
+      display: none;
+    }
+
+    .adaptive-projects__list {
+      display: grid;
+      gap: 1px;
+      border: 0;
+      background: var(--line);
+    }
+
+    .project-entry {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(17rem, 0.92fr);
+      gap: clamp(1.5rem, 5vw, 3.5rem);
+      align-items: center;
+      min-height: 0;
+      padding: clamp(2rem, 5vw, 3.5rem) 0;
+      border: 0;
+      background: var(--paper);
+    }
+
+    .adaptive-projects__list li:nth-child(even) .project-entry {
+      grid-template-columns: minmax(17rem, 0.92fr) minmax(0, 1.08fr);
+    }
+
+    .adaptive-projects__list li:nth-child(even) .project-entry__media {
+      grid-column: 2;
+    }
+
+    .adaptive-projects__list li:nth-child(even) .project-entry__body {
+      grid-row: 1;
+    }
+
+    .project-entry__media {
+      display: block;
+      aspect-ratio: 3 / 2;
+      border: 1px solid var(--line);
+      border-radius: 1.1rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .project-entry__body {
+      grid-template-columns: 2.5rem minmax(0, 1fr);
+      align-items: start;
+      padding-inline: 0.35rem;
+    }
+
+    .project-entry__copy {
+      gap: 0.7rem;
+    }
+
+    .project-entry h2 {
+      font-size: clamp(1.55rem, 4vw, 2.25rem);
+    }
+
+    .project-entry__summary,
+    .project-entry__role {
+      display: block;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+
+    .project-entry__role {
+      padding-top: 0.15rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .project-entry__action {
+      grid-column: 2;
+      margin-top: 0.2rem;
+      color: var(--ink);
+    }
+
+    .project-entry__action-short {
+      display: none;
+    }
+
+    .project-entry__action-long {
+      display: inline;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .project-entry,
+    .adaptive-projects__list li:nth-child(even) .project-entry {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      padding: 2.5rem 0;
+    }
+
+    .adaptive-projects__list li:nth-child(even) .project-entry__media,
+    .adaptive-projects__list li:nth-child(even) .project-entry__body {
+      grid-column: auto;
+      grid-row: auto;
+    }
+
+    .project-entry__media {
+      aspect-ratio: 16 / 10;
+      border-radius: 0.9rem;
+    }
+
+    .project-entry__body {
+      padding-inline: 0.15rem;
+    }
+
+    .project-entry h2 {
+      font-size: clamp(1.55rem, 8vw, 2.25rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .project-preview,
+    .project-entry {
+      transition: none;
+    }
+  }
+</style>

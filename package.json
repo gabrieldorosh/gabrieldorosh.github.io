@@ -1,0 +1,24 @@
+{
+  "name": "astro-site",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@lucide/astro": "^1.28.0",
+    "astro": "^7.3.2",
+    "js-yaml": "^4.3.2",
+    "simple-icons": "^16.27.1"
+  },
+  "overrides": {
+    "picomatch": "4.0.4",
+    "vite": "^8.3.0"
+  }
+}

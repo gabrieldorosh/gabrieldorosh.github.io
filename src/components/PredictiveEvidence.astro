@@ -1,0 +1,394 @@
+---
+const models = [
+  {
+    name: "Dummy majority",
+    detail: "No-skill reference",
+    validation: 0.5,
+    test: 0.5,
+  },
+  {
+    name: "Random Forest",
+    detail: "Map known · leaf 50",
+    validation: 0.648,
+    test: 0.627,
+  },
+  {
+    name: "Random Forest",
+    detail: "Starting side known · leaf 20",
+    validation: 0.648,
+    test: 0.626,
+  },
+  {
+    name: "Soft-vote ensemble",
+    detail: "Selected model",
+    validation: 0.651,
+    test: 0.63,
+  },
+];
+
+const axisMinimum = 0.5;
+const axisMaximum = 0.66;
+const position = (value: number) =>
+  ((value - axisMinimum) / (axisMaximum - axisMinimum)) * 100;
+const ticks = [0.5, 0.54, 0.58, 0.62, 0.66];
+---
+
+<figure class="predictive-evidence" data-reveal aria-labelledby="auc-chart-title">
+  <div class="predictive-evidence__header">
+    <div>
+      <p class="predictive-evidence__eyebrow">Report evidence · Table 4.3</p>
+      <h2 id="auc-chart-title">The model found signal, but it was limited</h2>
+      <p>Validation and chronological test ROC-AUC</p>
+    </div>
+    <div class="predictive-evidence__legend" aria-label="Chart legend">
+      <span><i class="is-validation"></i>Validation</span>
+      <span><i class="is-test"></i>Test</span>
+    </div>
+  </div>
+
+  <div
+    class="auc-chart"
+    role="img"
+    aria-label="Validation and chronological test ROC-AUC. The dummy majority baseline scored 0.500 on validation and test. The map-known Random Forest scored 0.648 validation and 0.627 test. The starting-side-known Random Forest scored 0.648 validation and 0.626 test. The selected soft-vote ensemble scored 0.651 validation and 0.630 test."
+  >
+    <div class="auc-chart__rows">
+      {
+        models.map((model) => {
+          const validationPosition = position(model.validation);
+          const testPosition = position(model.test);
+          const lowPosition = Math.min(validationPosition, testPosition);
+          const highPosition = Math.max(validationPosition, testPosition);
+
+          return (
+            <div class="auc-chart__row">
+              <div class="auc-chart__label">
+                <strong>{model.name}</strong>
+                <span>{model.detail}</span>
+              </div>
+              <div
+                class="auc-chart__track"
+                style={`--validation: ${validationPosition}%; --test: ${testPosition}%; --low: ${lowPosition}%; --high: ${highPosition}%`}
+              >
+                <span class="auc-chart__baseline" aria-hidden="true"></span>
+                <span class="auc-chart__connector" aria-hidden="true"></span>
+                <span class="auc-chart__point is-validation" aria-hidden="true"></span>
+                <span class="auc-chart__point is-test" aria-hidden="true"></span>
+                <span class="auc-chart__value is-validation">{model.validation.toFixed(3)}</span>
+                <span class="auc-chart__value is-test">{model.test.toFixed(3)}</span>
+              </div>
+            </div>
+          );
+        })
+      }
+    </div>
+
+    <div class="auc-chart__axis" aria-hidden="true">
+      <span class="auc-chart__axis-label">No-skill</span>
+      <div>
+        {ticks.map((tick) => <span style={`left: ${position(tick)}%`}>{tick.toFixed(2)}</span>)}
+      </div>
+    </div>
+  </div>
+
+  <figcaption>
+    The validation-selected ensemble reached 0.651 ROC-AUC on validation and 0.630
+    on the chronological test period—only 0.003 above the strongest Random Forest.
+    ROC-AUC measures ranking ability, not prediction accuracy. Source: Degree Project
+    Report, Table 4.3, PDF page 31.
+  </figcaption>
+
+  <details>
+    <summary>View the exact chart values</summary>
+    <div class="predictive-evidence__table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Model</th>
+            <th scope="col">Validation</th>
+            <th scope="col">Test</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            models.map((model) => (
+              <tr>
+                <th scope="row">{model.name} · {model.detail}</th>
+                <td>{model.validation.toFixed(3)}</td>
+                <td>{model.test.toFixed(3)}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </details>
+</figure>
+
+<style>
+  .predictive-evidence {
+    width: min(calc(100% - 3rem), 1240px);
+    margin: 0 auto clamp(3.5rem, 7vw, 6rem);
+    padding: clamp(1.35rem, 3vw, 2.25rem);
+    border: 1px solid var(--line);
+    border-radius: 0.7rem;
+    background: var(--surface);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .predictive-evidence__header {
+    display: flex;
+    gap: 2rem;
+    align-items: end;
+    justify-content: space-between;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+
+  .predictive-evidence__eyebrow {
+    margin: 0 0 0.65rem;
+    color: var(--project-accent-ink);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .predictive-evidence h2 {
+    max-width: 19ch;
+    margin: 0 0 0.55rem;
+    font-size: clamp(1.65rem, 3.4vw, 2.8rem);
+    line-height: 1.03;
+  }
+
+  .predictive-evidence__header p:last-child {
+    margin: 0;
+    color: var(--muted);
+  }
+
+  .predictive-evidence__legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.2rem;
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .predictive-evidence__legend span {
+    display: inline-flex;
+    gap: 0.45rem;
+    align-items: center;
+  }
+
+  .predictive-evidence__legend i {
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .predictive-evidence__legend i.is-test {
+    background: var(--project-accent);
+  }
+
+  .auc-chart__rows {
+    display: grid;
+    gap: 1.35rem;
+  }
+
+  .auc-chart__row {
+    display: grid;
+    grid-template-columns: minmax(10rem, 0.42fr) minmax(18rem, 1fr);
+    gap: clamp(1.25rem, 4vw, 3rem);
+    align-items: center;
+  }
+
+  .auc-chart__label {
+    display: grid;
+    gap: 0.18rem;
+  }
+
+  .auc-chart__label strong {
+    font-size: 0.86rem;
+  }
+
+  .auc-chart__label span {
+    color: var(--muted);
+    font-size: 0.7rem;
+  }
+
+  .auc-chart__track {
+    position: relative;
+    height: 2.8rem;
+    border-block: 1px solid color-mix(in srgb, var(--line) 78%, transparent);
+    background:
+      linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 25% 100%;
+  }
+
+  .auc-chart__baseline {
+    position: absolute;
+    z-index: 1;
+    inset-block: -0.4rem;
+    left: 0;
+    width: 2px;
+    background: color-mix(in srgb, var(--ink) 42%, transparent);
+  }
+
+  .auc-chart__connector {
+    position: absolute;
+    top: 50%;
+    left: var(--low);
+    width: calc(var(--high) - var(--low));
+    height: 3px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--ink) 24%, transparent);
+    transform: translateY(-50%);
+  }
+
+  .auc-chart__point {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: var(--validation);
+    width: 0.82rem;
+    height: 0.82rem;
+    border: 2px solid var(--surface);
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 72%, var(--ink));
+    transform: translate(-50%, -50%);
+  }
+
+  .auc-chart__point.is-test {
+    left: var(--test);
+    width: 0.72rem;
+    height: 0.72rem;
+    background: var(--project-accent);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--project-accent) 72%, var(--ink));
+  }
+
+  .auc-chart__value {
+    position: absolute;
+    top: -0.3rem;
+    left: var(--validation);
+    color: var(--accent-deep);
+    font-size: 0.62rem;
+    font-weight: 800;
+    transform: translate(-50%, -100%);
+  }
+
+  .auc-chart__value.is-test {
+    top: auto;
+    bottom: -0.3rem;
+    left: var(--test);
+    color: var(--project-accent-ink);
+    transform: translate(-50%, 100%);
+  }
+
+  .auc-chart__axis {
+    display: grid;
+    grid-template-columns: minmax(10rem, 0.42fr) minmax(18rem, 1fr);
+    gap: clamp(1.25rem, 4vw, 3rem);
+    margin-top: 0.8rem;
+    color: var(--muted);
+    font-size: 0.62rem;
+  }
+
+  .auc-chart__axis-label {
+    justify-self: end;
+    padding-right: 0.25rem;
+  }
+
+  .auc-chart__axis > div {
+    position: relative;
+    height: 1rem;
+  }
+
+  .auc-chart__axis > div span {
+    position: absolute;
+    transform: translateX(-50%);
+  }
+
+  .predictive-evidence figcaption {
+    max-width: 86ch;
+    margin-top: 2.1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 0.78rem;
+    line-height: 1.6;
+  }
+
+  .predictive-evidence details {
+    margin-top: 1rem;
+  }
+
+  .predictive-evidence summary {
+    color: var(--ink-soft);
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .predictive-evidence__table-wrap {
+    margin-top: 1rem;
+    overflow-x: auto;
+  }
+
+  .predictive-evidence table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.76rem;
+  }
+
+  .predictive-evidence th,
+  .predictive-evidence td {
+    padding: 0.7rem;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+  }
+
+  .predictive-evidence td {
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (max-width: 760px) {
+    .predictive-evidence {
+      width: calc(100% - 2rem);
+    }
+
+    .predictive-evidence__header {
+      display: grid;
+      align-items: start;
+    }
+
+    .auc-chart__rows,
+    .auc-chart__axis {
+      min-width: 0;
+    }
+
+    .auc-chart__rows {
+      gap: 1.8rem;
+    }
+
+    .auc-chart__row {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    .auc-chart__track {
+      width: calc(100% - 0.9rem);
+      margin-inline: 0.45rem;
+    }
+
+    .auc-chart__axis {
+      grid-template-columns: 1fr;
+      gap: 0.45rem;
+      padding-inline: 0.45rem;
+    }
+
+    .auc-chart__axis-label {
+      justify-self: start;
+      padding-right: 0;
+    }
+  }
+</style>

@@ -1,0 +1,31 @@
+---
+import type { SimpleIcon } from "simple-icons";
+
+interface Props {
+  icon: SimpleIcon;
+  title?: string;
+  size?: number;
+  class?: string;
+}
+
+const {
+  icon,
+  title,
+  size = 20,
+  class: className,
+} = Astro.props;
+---
+
+<svg
+  class={className}
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="currentColor"
+  role={title ? "img" : undefined}
+  aria-hidden={title ? undefined : "true"}
+  focusable="false"
+>
+  {title && <title>{title}</title>}
+  <path d={icon.path}></path>
+</svg>

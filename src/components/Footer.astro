@@ -1,0 +1,137 @@
+---
+import { siteConfig } from "../config/site";
+import { FileText, Mail } from "@lucide/astro";
+import {
+  siFaceit,
+  siGithub,
+  siInstagram,
+  siLetterboxd,
+  siSpotify,
+  siSteam,
+  siX,
+  type SimpleIcon,
+} from "simple-icons";
+import BrandIcon from "./BrandIcon.astro";
+
+interface Props {
+  theme?: "default" | "gaming";
+}
+
+const { theme = "default" } = Astro.props;
+const year = new Date().getFullYear();
+
+interface FooterLink {
+  label: string;
+  href: string;
+  external: boolean;
+  icon?: SimpleIcon;
+  iconType?: "mail" | "linkedin" | "cv";
+  color?: string;
+}
+
+const footerGroups: Array<{ label: string; links: FooterLink[] }> = [
+  {
+    label: "Professional",
+    links: [
+      {
+        label: "Email",
+        href: `mailto:${siteConfig.email}`,
+        external: false,
+        iconType: "mail",
+        color: "#aeb5ef",
+      },
+      {
+        label: "GitHub",
+        href: siteConfig.social.github,
+        external: true,
+        icon: siGithub,
+        color: "#ffffff",
+      },
+      {
+        label: "LinkedIn",
+        href: siteConfig.social.linkedin,
+        external: true,
+        iconType: "linkedin",
+        color: "#5aa9e6",
+      },
+      {
+        label: "CV",
+        href: "/cv/",
+        external: false,
+        iconType: "cv",
+        color: "#d8c8f2",
+      },
+    ],
+  },
+  {
+    label: "Elsewhere",
+    links: [
+      {
+        label: "Letterboxd",
+        href: siteConfig.social.letterboxd,
+        external: true,
+        icon: siLetterboxd,
+        color: "#ffffff",
+      },
+      {
+        label: "Steam",
+        href: siteConfig.social.steam,
+        external: true,
+        icon: siSteam,
+        color: "#ffffff",
+      },
+      { label: "Spotify", href: siteConfig.social.spotify, external: true, icon: siSpotify },
+      { label: "Instagram", href: siteConfig.social.instagram, external: true, icon: siInstagram },
+      { label: "X", href: siteConfig.social.x, external: true, icon: siX, color: "#ffffff" },
+      { label: "FACEIT", href: siteConfig.social.faceit, external: true, icon: siFaceit },
+    ],
+  },
+];
+---
+
+<footer class:list={["site-footer", { "site-footer--gaming": theme === "gaming" }]}>
+  <div class="container site-footer__top">
+    <div class="site-footer__closing">
+      <p class="site-footer__eyebrow">Elsewhere online</p>
+      <p class="site-footer__title">
+        Projects, personal links, and contact details.
+      </p>
+    </div>
+  </div>
+
+  <nav class="container site-footer__groups" aria-label="Contact and personal links">
+    {
+      footerGroups.map((group) => (
+        <section class="site-footer__group" aria-labelledby={`footer-${group.label.toLowerCase()}`}>
+          <p id={`footer-${group.label.toLowerCase()}`} class="site-footer__group-label">
+            {group.label}
+          </p>
+          <div class="site-footer__links">
+            {group.links.map((link) => (
+              <a
+                class="site-footer__link"
+                href={link.href}
+                target={link.external ? "_blank" : undefined}
+                rel={link.external ? "noopener noreferrer" : undefined}
+                style={`--link-accent: ${link.color ?? `#${link.icon?.hex ?? "aeb5ef"}`}`}
+              >
+                <span class="site-footer__icon" aria-hidden="true">
+                  {link.icon && <BrandIcon icon={link.icon} size={20} />}
+                  {link.iconType === "mail" && <Mail size={20} stroke-width={1.9} />}
+                  {link.iconType === "linkedin" && <span class="site-footer__linkedin">in</span>}
+                  {link.iconType === "cv" && <FileText size={20} stroke-width={1.9} />}
+                </span>
+                <span>{link.label}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      ))
+    }
+  </nav>
+
+  <div class="container site-footer__bottom">
+    <p>© {year} {siteConfig.name}</p>
+    <a class="site-footer__secret" href="/gaming/" aria-label="Gaming">Gaming</a>
+  </div>
+</footer>

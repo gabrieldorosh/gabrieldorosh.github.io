@@ -1,0 +1,33 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import AdaptiveProjectIndex from "../../components/AdaptiveProjectIndex.astro";
+
+const projects = (await getCollection("projects", ({ data }) => !data.draft && data.listed)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+
+<BaseLayout
+  title="Work"
+  description="Case studies covering machine learning, full-stack web development, algorithms, and live infrastructure by Gabriel Dorosh."
+>
+  <section class="page-hero page-hero--work">
+    <div class="container page-hero__inner">
+      <div data-reveal>
+        <p class="eyebrow">Work / Projects</p>
+        <h1>Software, data, and infrastructure</h1>
+      </div>
+      <p class="page-hero__intro" data-reveal style="--card-index: 1">
+        The work below ranges from a machine-learning dissertation and full-stack
+        applications to a QR encoder and the operational systems behind a live community.
+      </p>
+    </div>
+  </section>
+
+  <section class="work-index" aria-label="Project case studies">
+    <div class="container">
+      <AdaptiveProjectIndex projects={projects} />
+    </div>
+  </section>
+</BaseLayout>

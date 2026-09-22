@@ -1,0 +1,118 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { siteConfig } from "../config/site";
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  theme?: "default" | "gaming";
+  noindex?: boolean;
+  socialImage?: string;
+  socialImageAlt?: string;
+  socialImageWidth?: number;
+  socialImageHeight?: number;
+  socialImageType?: string;
+}
+
+const {
+  title,
+  description = siteConfig.description,
+  theme = "default",
+  noindex = false,
+  socialImage = "/og.png",
+  socialImageAlt = "Gabriel Dorosh portfolio preview",
+  socialImageWidth = 1731,
+  socialImageHeight = 909,
+  socialImageType = "image/png",
+} = Astro.props;
+
+const pageTitle = title ? `${title} · ${siteConfig.name}` : `${siteConfig.name} · ${siteConfig.title}`;
+const canonical = new URL(Astro.url.pathname, siteConfig.url);
+const socialImageUrl = new URL(socialImage, siteConfig.url);
+---
+
+<!doctype html>
+<html lang="en" class:list={{ "theme-gaming": theme === "gaming" }}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content={theme === "gaming" ? "#08090a" : "#f4f2ed"} />
+    {noindex && <meta name="robots" content="noindex" />}
+    {!noindex && <link rel="canonical" href={canonical} />}
+
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" href="/sitemap.xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap"
+    />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={siteConfig.name} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={socialImageUrl} />
+    <meta property="og:image:alt" content={socialImageAlt} />
+    <meta property="og:image:type" content={socialImageType} />
+    <meta property="og:image:width" content={String(socialImageWidth)} />
+    <meta property="og:image:height" content={String(socialImageHeight)} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImageUrl} />
+    <meta name="twitter:image:alt" content={socialImageAlt} />
+
+    <title>{pageTitle}</title>
+    <script is:inline>
+      document.documentElement.classList.add("has-js");
+    </script>
+  </head>
+  <body class:list={{ "gaming-body": theme === "gaming" }}>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <Header theme={theme} />
+    <main id="main-content" tabindex="-1">
+      <slot />
+    </main>
+    <Footer theme={theme} />
+
+    <script>
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if (!reduceMotion && "IntersectionObserver" in window) {
+        document.documentElement.classList.add("reveal-ready");
+
+        const revealObserver = new IntersectionObserver(
+          (entries, observer) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            });
+          },
+          // Long case studies must reveal even when only a small part fits on screen.
+          { threshold: 0, rootMargin: "0px 0px -5% 0px" },
+        );
+
+        document.querySelectorAll("[data-reveal]").forEach((element) => {
+          revealObserver.observe(element);
+        });
+      } else {
+        document.querySelectorAll("[data-reveal]").forEach((element) => {
+          element.classList.add("is-visible");
+        });
+      }
+
+    </script>
+  </body>
+</html>

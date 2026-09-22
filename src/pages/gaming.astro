@@ -1,0 +1,896 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+import { ExternalLink } from '@lucide/astro';
+import setupImage from '../assets/gaming/setup.jpg';
+import cacheMap from '../assets/projects/cache.jpeg';
+import { siteConfig } from '../config/site';
+
+const steamUrl = siteConfig.social.steam;
+const faceitUrl = siteConfig.social.faceit;
+
+const stats = [
+  { value: '2,847', label: 'Hours played' },
+  { value: '1.04', label: 'K/D ratio' },
+  { value: '51%', label: 'Headshot rate' },
+];
+
+const clips = [
+  {
+    category: 'ACE Mid Rush',
+    title: 'AK-47 ACE on Cache',
+    map: 'de_cache',
+    tag: 'ACE',
+    src: 'https://media2.allstar.gg/67143af5e18f702407ca26b3/clips/6a03ace6e9a044389fbfc02f.mp4',
+  },
+  {
+    category: 'Entry Kills',
+    title: 'AK-47 3K on Vertigo',
+    map: 'de_vertigo',
+    tag: 'Entry',
+    src: 'https://media2.allstar.gg/67143af5e18f702407ca26b3/clips/6a13137b6689096a78459d9f.mp4',
+  },
+  {
+    category: 'Entry Kills',
+    title: 'All Headshots on Cache with AK-47',
+    map: 'de_cache',
+    tag: 'Entry',
+    src: 'https://media2.allstar.gg/67143af5e18f702407ca26b3/clips/69fb3fb4ba052a0d34d7a401.mp4',
+  },
+  {
+    category: 'Anchor Ace',
+    title: 'AK-47 Ace on Cache!',
+    map: 'de_cache',
+    tag: 'Anchor',
+    src: 'https://media2.allstar.gg/67143af5e18f702407ca26b3/clips/69fa71943757e9d8dd02a767.mp4',
+  },
+  {
+    category: 'Site Hold',
+    title: 'All Headshots on Cache with AK-47',
+    map: 'de_cache',
+    tag: 'Site hold',
+    src: 'https://media2.allstar.gg/67143af5e18f702407ca26b3/clips/69f5d1cc555a483279d5ef9a.mp4',
+  },
+  {
+    category: 'Spray Control',
+    title: 'All Headshots on Alpine with AK-47',
+    map: 'de_alpine',
+    tag: 'Spray',
+    src: 'https://media2.allstar.gg/67143af5e18f702407ca26b3/clips/69ef9d78582442dcd102e637.mp4',
+  },
+];
+---
+
+<BaseLayout
+  title="Gaming"
+  description="Gabriel Dorosh's Counter-Strike player profile and recent gameplay highlights."
+  theme="gaming"
+  noindex
+>
+  <div class="gaming-page">
+    <section
+      class="gaming-hero"
+      aria-labelledby="gaming-title"
+      style={`--gaming-map-image: url("${cacheMap.src}")`}
+    >
+      <div class="gaming-shell hero-layout">
+        <div class="hero-copy">
+          <p class="eyebrow">Counter-Strike 2</p>
+          <h1 id="gaming-title">
+            <span>Gabriel</span>
+            <strong>“gabel” Dorosh</strong>
+          </h1>
+          <p class="hero-intro">
+            Counter-Strike has been my main competitive game for more than a
+            decade. I enjoy the combination of teamwork, decision-making, and
+            mechanical skill—and Cache is still my favourite map.
+          </p>
+
+          <div class="hero-actions" role="group" aria-label="Player profiles">
+            <a class="gaming-button gaming-button--primary" href={faceitUrl} target="_blank" rel="noopener">
+              View FACEIT profile
+              <ExternalLink aria-hidden="true" size={15} stroke-width={2} />
+            </a>
+            <a class="gaming-button gaming-button--secondary" href={steamUrl} target="_blank" rel="noopener">
+              View Steam profile
+              <ExternalLink aria-hidden="true" size={15} stroke-width={2} />
+            </a>
+          </div>
+        </div>
+
+        <aside class="player-card" aria-label="Player profile">
+          <div class="player-card__topline">
+            <span>Player profile</span>
+            <span class="player-status"><i aria-hidden="true"></i> FACEIT L9</span>
+          </div>
+          <div class="avatar-frame">
+            <img
+              src="https://avatars.akamai.steamstatic.com/849da80fddd727d76905cab08f3c4d9c89b5aafe_full.jpg"
+              alt="Gabriel Dorosh’s Steam avatar"
+              width="184"
+              height="184"
+              loading="eager"
+              decoding="async"
+            />
+          </div>
+          <p class="player-handle">gabel</p>
+          <p class="player-role">Entry fragger <span aria-hidden="true">/</span> Anchor <span aria-hidden="true">/</span> AWPer</p>
+        </aside>
+      </div>
+
+      <div class="gaming-shell">
+        <ul class="stat-grid" aria-label="Counter-Strike statistics">
+          {stats.map((stat, index) => (
+            <li>
+              <span class="stat-index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+              <strong>{stat.value}</strong>
+              <span>{stat.label}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section class="player-story" aria-labelledby="player-story-title">
+      <div class="gaming-shell story-layout">
+        <div class="story-copy">
+          <h2 id="player-story-title">My PC isn't just for coding</h2>
+          <p>I keep coming back because improvement comes from learning the game and executing well, not from unlocking better gear or levelling a character.</p>
+          <p>I have competed with several teams, most often entering on T side and anchoring sites on CT. I also enjoy taking the AWP when the round calls for it.</p>
+        </div>
+
+        <figure class="setup-frame">
+          <Image
+            src={setupImage}
+            alt="Gabriel’s gaming setup"
+            widths={[640, 960, 1280]}
+            sizes="(max-width: 900px) 100vw, 55vw"
+            loading="lazy"
+          />
+          <figcaption>
+            <span>Gaming setup</span>
+            <span>Counter-Strike</span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="highlights" aria-labelledby="highlights-title">
+      <div class="gaming-shell">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Allstar archive</p>
+            <h2 id="highlights-title">Recent highlights</h2>
+          </div>
+          <p>A few rounds from recent Counter-Strike 2 matches.</p>
+        </div>
+
+        <div class="clip-grid">
+          {clips.map((clip, index) => {
+            return (
+              <article class="clip-card">
+                <div class="clip-card__topline">
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  <span>{clip.category}</span>
+                </div>
+
+                <div class="video-frame">
+                  <video
+                    controls
+                    preload="metadata"
+                    playsinline
+                    title={clip.title}
+                  >
+                    <source src={clip.src} type="video/mp4" />
+                    Your browser does not support embedded video.
+                    <a href={clip.src} target="_blank" rel="noopener">Open {clip.title}</a>.
+                  </video>
+                </div>
+
+                <div class="clip-card__body">
+                  <div class="clip-meta">
+                    <span>{clip.map}</span>
+                    <span>{clip.tag}</span>
+                  </div>
+                  <h3>{clip.title}</h3>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+
+    <section class="player-links" aria-labelledby="player-links-title">
+      <div class="gaming-shell links-panel">
+        <div>
+          <p class="section-kicker">Player links</p>
+          <h2 id="player-links-title">Want to play?</h2>
+        </div>
+        <div class="link-list">
+          <a href={faceitUrl} target="_blank" rel="noopener">
+            <span>FACEIT</span>
+            <strong>pooey</strong>
+            <ExternalLink aria-hidden="true" size={17} stroke-width={2} />
+          </a>
+          <a href={steamUrl} target="_blank" rel="noopener">
+            <span>Steam</span>
+            <strong>kng-gabel</strong>
+            <ExternalLink aria-hidden="true" size={17} stroke-width={2} />
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .gaming-page {
+    --gaming-bg: #080a0b;
+    --gaming-panel: #101315;
+    --gaming-panel-raised: #15191b;
+    --gaming-border: #2a2f32;
+    --gaming-text: #f4f1eb;
+    --gaming-muted: #a5aaad;
+    --gaming-orange: #ff5a1f;
+    --gaming-yellow: #ffbc42;
+    color: var(--gaming-text);
+    background: var(--gaming-bg);
+  }
+
+  .gaming-shell {
+    width: min(1180px, calc(100% - 3rem));
+    margin-inline: auto;
+  }
+
+  .gaming-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    min-height: calc(100svh - 4.5rem);
+    padding: clamp(5.5rem, 11vw, 9rem) 0 3rem;
+    background:
+      radial-gradient(circle at 82% 18%, rgb(255 90 31 / 16%), transparent 28rem),
+      radial-gradient(circle at 10% 78%, rgb(255 188 66 / 7%), transparent 30rem),
+      linear-gradient(135deg, #111516 0%, #080a0b 52%, #050606 100%);
+  }
+
+  .gaming-hero::before {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background:
+      linear-gradient(
+        90deg,
+        rgb(5 6 6 / 98%) 0%,
+        rgb(8 10 11 / 92%) 39%,
+        rgb(8 10 11 / 58%) 72%,
+        rgb(5 6 6 / 78%) 100%
+      ),
+      linear-gradient(rgb(255 255 255 / 2.5%) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(255 255 255 / 2.5%) 1px, transparent 1px),
+      var(--gaming-map-image) 68% center / cover no-repeat;
+    mask-image: linear-gradient(to bottom, black, transparent 94%);
+    content: "";
+  }
+
+  .gaming-hero::after {
+    position: absolute;
+    z-index: -1;
+    right: -11rem;
+    bottom: -14rem;
+    width: 34rem;
+    height: 34rem;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgb(255 90 31 / 12%), transparent 68%);
+    content: "";
+  }
+
+  .hero-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(17rem, 0.55fr);
+    gap: clamp(3rem, 8vw, 8rem);
+    align-items: center;
+  }
+
+  .eyebrow,
+  .section-kicker {
+    margin: 0 0 1.25rem;
+    color: var(--gaming-orange);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .eyebrow span {
+    padding-inline: 0.5rem;
+    color: #666d70;
+  }
+
+  .hero-copy h1 {
+    max-width: 13ch;
+    margin: 0;
+    font-size: clamp(3.7rem, 8.8vw, 8rem);
+    font-weight: 820;
+    line-height: 0.82;
+    letter-spacing: -0.07em;
+    text-wrap: balance;
+  }
+
+  .hero-copy h1 span,
+  .hero-copy h1 strong {
+    display: block;
+  }
+
+  .hero-copy h1 strong {
+    margin-top: 0.17em;
+    color: transparent;
+    font-size: 0.55em;
+    font-weight: 780;
+    line-height: 1;
+    letter-spacing: -0.045em;
+    -webkit-text-stroke: 1px rgb(244 241 235 / 58%);
+  }
+
+  .hero-intro {
+    max-width: 37rem;
+    margin: 2rem 0 0;
+    color: var(--gaming-muted);
+    font-size: clamp(1rem, 1.4vw, 1.17rem);
+    line-height: 1.7;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .gaming-button {
+    display: inline-flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 3.25rem;
+    padding: 0.8rem 1.1rem;
+    border: 1px solid var(--gaming-border);
+    color: var(--gaming-text);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 180ms ease, background 180ms ease, border-color 180ms ease,
+      transform 180ms ease;
+  }
+
+  .gaming-button--primary {
+    border-color: var(--gaming-orange);
+    color: #090a0a;
+    background: var(--gaming-orange);
+  }
+
+  .gaming-button:hover {
+    border-color: var(--gaming-orange);
+    color: var(--gaming-text);
+    background: #1c2022;
+    transform: translateY(-2px);
+  }
+
+  .gaming-button--primary:hover {
+    color: #090a0a;
+    background: #ff7546;
+  }
+
+  .gaming-button:focus-visible,
+  .link-list a:focus-visible,
+  .clip-card video:focus-visible {
+    outline: 3px solid var(--gaming-yellow);
+    outline-offset: 4px;
+  }
+
+  .player-card {
+    position: relative;
+    max-width: 21rem;
+    margin-inline: auto;
+    padding: 0.85rem;
+    border: 1px solid var(--gaming-border);
+    background:
+      linear-gradient(145deg, rgb(255 255 255 / 4%), transparent 36%),
+      rgb(12 15 16 / 88%);
+    box-shadow: 0 2rem 6rem rgb(0 0 0 / 48%);
+  }
+
+  .player-card::after {
+    position: absolute;
+    right: -1px;
+    bottom: -1px;
+    width: 4rem;
+    height: 4rem;
+    border-right: 2px solid var(--gaming-orange);
+    border-bottom: 2px solid var(--gaming-orange);
+    content: "";
+    pointer-events: none;
+  }
+
+  .player-card__topline,
+  .setup-frame figcaption,
+  .clip-card__topline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #8e9598;
+    font-size: 0.66rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .player-card__topline {
+    margin-bottom: 0.85rem;
+  }
+
+  .player-status {
+    display: inline-flex;
+    gap: 0.45rem;
+    align-items: center;
+    color: #c9cecf;
+  }
+
+  .player-status i {
+    width: 0.42rem;
+    height: 0.42rem;
+    border-radius: 50%;
+    background: #72d68c;
+    box-shadow: 0 0 0 4px rgb(114 214 140 / 10%);
+  }
+
+  .avatar-frame {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: #050606;
+  }
+
+  .avatar-frame::before,
+  .avatar-frame::after {
+    position: absolute;
+    z-index: 1;
+    inset: 50% auto auto 50%;
+    background: rgb(255 255 255 / 28%);
+    content: "";
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+  }
+
+  .avatar-frame::before {
+    width: 1px;
+    height: 2.4rem;
+  }
+
+  .avatar-frame::after {
+    width: 2.4rem;
+    height: 1px;
+  }
+
+  .avatar-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.88) contrast(1.04);
+  }
+
+  .player-handle {
+    margin: 1rem 0 0.15rem;
+    font-size: 1.45rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+  }
+
+  .player-role {
+    margin: 0;
+    color: var(--gaming-muted);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 55rem;
+    margin: clamp(4rem, 9vw, 7.5rem) 0 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--gaming-border);
+    border-left: 1px solid var(--gaming-border);
+  }
+
+  .stat-grid li {
+    position: relative;
+    min-height: 9rem;
+    padding: 1.35rem;
+    border-right: 1px solid var(--gaming-border);
+    border-bottom: 1px solid var(--gaming-border);
+    background: rgb(9 11 12 / 70%);
+  }
+
+  .stat-grid strong,
+  .stat-grid span {
+    display: block;
+  }
+
+  .stat-grid strong {
+    margin-top: 1.35rem;
+    color: var(--gaming-text);
+    font-size: clamp(2rem, 4vw, 3.3rem);
+    line-height: 1;
+    letter-spacing: -0.06em;
+  }
+
+  .stat-grid li > span:last-child {
+    margin-top: 0.45rem;
+    color: var(--gaming-muted);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .stat-grid .stat-index {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    color: #60676a;
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+  }
+
+  .player-story,
+  .highlights,
+  .player-links {
+    padding: clamp(5.5rem, 10vw, 9rem) 0;
+  }
+
+  .player-story {
+    border-top: 1px solid #161a1c;
+    background: #0c0e0f;
+  }
+
+  .story-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.83fr) minmax(22rem, 1.17fr);
+    gap: clamp(3rem, 9vw, 8rem);
+    align-items: center;
+  }
+
+  .story-copy h2,
+  .section-heading h2,
+  .links-panel h2 {
+    margin: 0;
+    color: var(--gaming-text);
+    font-size: clamp(2.35rem, 5vw, 4.75rem);
+    line-height: 0.98;
+    letter-spacing: -0.055em;
+    text-wrap: balance;
+  }
+
+  .story-copy > p:not(.section-kicker) {
+    margin: 1.5rem 0 0;
+    color: var(--gaming-muted);
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+
+  .setup-frame {
+    position: relative;
+    margin: 0;
+    padding: 0.85rem;
+    border: 1px solid var(--gaming-border);
+    background: var(--gaming-panel);
+  }
+
+  .setup-frame::before {
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: 28%;
+    height: 3px;
+    background: var(--gaming-orange);
+    content: "";
+  }
+
+  .setup-frame img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  .setup-frame figcaption {
+    padding-top: 0.85rem;
+  }
+
+  .setup-frame figcaption span:first-child {
+    color: var(--gaming-orange);
+  }
+
+  .highlights {
+    background:
+      linear-gradient(90deg, rgb(255 90 31 / 3%) 1px, transparent 1px),
+      #070909;
+    background-size: min(12vw, 10rem) 100%;
+  }
+
+  .section-heading {
+    display: flex;
+    gap: 3rem;
+    align-items: end;
+    justify-content: space-between;
+    margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+  }
+
+  .section-heading > p {
+    max-width: 21rem;
+    margin: 0 0 0.35rem;
+    color: var(--gaming-muted);
+    line-height: 1.65;
+  }
+
+  .clip-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .clip-card {
+    overflow: hidden;
+    border: 1px solid var(--gaming-border);
+    background: var(--gaming-panel);
+    transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+  }
+
+  .clip-card:hover {
+    border-color: #5b4035;
+    box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 28%);
+    transform: translateY(-3px);
+  }
+
+  .clip-card__topline {
+    min-height: 2.65rem;
+    padding: 0.6rem 0.85rem;
+    border-bottom: 1px solid var(--gaming-border);
+  }
+
+  .clip-card__topline span:first-child {
+    color: var(--gaming-orange);
+  }
+
+  .video-frame {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background:
+      radial-gradient(circle, rgb(255 90 31 / 13%) 0 2px, transparent 3px),
+      #030404;
+    background-size: 24px 24px;
+  }
+
+  .video-frame video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: #030404;
+    object-fit: cover;
+  }
+
+  .clip-card__body {
+    padding: 1.25rem;
+  }
+
+  .clip-meta {
+    display: flex;
+    gap: 0.45rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.9rem;
+  }
+
+  .clip-meta span {
+    padding: 0.3rem 0.5rem;
+    border: 1px solid #363c3f;
+    color: #aeb4b7;
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .clip-meta span:last-child {
+    border-color: rgb(255 90 31 / 42%);
+    color: #ff8a60;
+  }
+
+  .clip-card h3 {
+    margin: 0;
+    color: var(--gaming-text);
+    font-size: clamp(1.25rem, 2.2vw, 1.65rem);
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+  }
+
+  .clip-card__body > p {
+    margin: 0.7rem 0 0;
+    color: var(--gaming-muted);
+    font-size: 0.92rem;
+    line-height: 1.65;
+  }
+
+  .player-links {
+    border-top: 1px solid #181c1e;
+    background: #0d1011;
+  }
+
+  .links-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 0.75fr) minmax(24rem, 1.25fr);
+    gap: clamp(3rem, 9vw, 8rem);
+    align-items: start;
+  }
+
+  .link-list {
+    border-top: 1px solid var(--gaming-border);
+  }
+
+  .link-list a {
+    display: grid;
+    grid-template-columns: 5rem 1fr auto;
+    gap: 1rem;
+    align-items: center;
+    min-height: 5rem;
+    padding: 1rem 0.25rem;
+    border-bottom: 1px solid var(--gaming-border);
+    color: var(--gaming-text);
+    text-decoration: none;
+    transition: color 180ms ease, padding 180ms ease;
+  }
+
+  .link-list a:hover {
+    padding-inline: 0.75rem;
+    color: var(--gaming-orange);
+  }
+
+  .link-list span {
+    color: #888f92;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .link-list strong {
+    font-size: clamp(1.2rem, 2vw, 1.55rem);
+    letter-spacing: -0.025em;
+  }
+
+  .link-list svg {
+    color: var(--gaming-orange);
+  }
+
+  @media (max-width: 900px) {
+    .hero-layout,
+    .story-layout,
+    .links-panel {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-layout {
+      gap: 3.5rem;
+    }
+
+    .player-card {
+      width: min(100%, 21rem);
+      margin-inline: 0;
+    }
+
+    .story-layout {
+      gap: 3.25rem;
+    }
+
+    .setup-frame {
+      max-width: 42rem;
+    }
+
+    .links-panel {
+      gap: 2.75rem;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .gaming-shell {
+      width: min(100% - 2rem, 1180px);
+    }
+
+    .gaming-hero {
+      min-height: auto;
+      padding-top: 4.75rem;
+    }
+
+    .gaming-hero::before {
+      background:
+        linear-gradient(
+          180deg,
+          rgb(5 6 6 / 86%) 0%,
+          rgb(8 10 11 / 92%) 58%,
+          rgb(5 6 6 / 98%) 100%
+        ),
+        linear-gradient(rgb(255 255 255 / 2%) 1px, transparent 1px),
+        linear-gradient(90deg, rgb(255 255 255 / 2%) 1px, transparent 1px),
+        var(--gaming-map-image) 62% center / cover no-repeat;
+    }
+
+    .hero-copy h1 {
+      font-size: clamp(3.4rem, 17vw, 5.5rem);
+    }
+
+    .hero-actions,
+    .gaming-button {
+      width: 100%;
+    }
+
+    .stat-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .stat-grid li {
+      min-height: 7.5rem;
+    }
+
+    .stat-grid strong {
+      margin-top: 0.9rem;
+    }
+
+    .section-heading {
+      display: block;
+    }
+
+    .section-heading > p {
+      margin-top: 1.25rem;
+    }
+
+    .clip-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .hero-copy h1 {
+      font-size: clamp(3rem, 16vw, 4rem);
+    }
+
+    .hero-copy h1 strong {
+      font-size: 0.49em;
+    }
+
+    .player-story,
+    .highlights,
+    .player-links {
+      padding-block: 4.5rem;
+    }
+
+    .link-list a {
+      grid-template-columns: 4.25rem 1fr auto;
+      gap: 0.65rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .gaming-button,
+    .clip-card,
+    .link-list a {
+      transition: none;
+    }
+  }
+</style>

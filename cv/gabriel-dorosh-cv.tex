@@ -1,0 +1,202 @@
+% Public CV source for gabrieldorosh.com
+% Based on the MIT-licensed resume template by Jake Gutierrez:
+% https://github.com/sb2nov/resume
+
+\documentclass[a4paper,10pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage[a4paper,margin=1.45cm]{geometry}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{tabularx}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+
+\hypersetup{
+  pdftitle={Gabriel Dorosh - CV},
+  pdfauthor={Gabriel Dorosh},
+  pdfsubject={Software development curriculum vitae}
+}
+
+\ifdefined\pdfgentounicode
+  \input{glyphtounicode}
+  \pdfgentounicode=1
+\fi
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyfoot[C]{\footnotesize Gabriel Dorosh \textbar{} Page \thepage}
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \renewcommand{\footrulewidth}{0pt}%
+  \fancyfoot[C]{\footnotesize Gabriel Dorosh \textbar{} Page \thepage}%
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\tabcolsep}{0pt}
+\raggedright
+\urlstyle{same}
+
+\titleformat{\section}
+  {\vspace{2pt}\large\bfseries\scshape}
+  {}{0pt}{}
+  [\vspace{1pt}\color{black}\titlerule\vspace{2pt}]
+
+\newcommand{\entry}[4]{%
+  \begin{tabular*}{\textwidth}{@{}l@{\extracolsep{\fill}}r@{}}
+    \textbf{#1} & #2 \\
+    \textit{#3} & \textit{#4}
+  \end{tabular*}\vspace{-1pt}
+}
+
+\newcommand{\project}[2]{%
+  \begin{tabular*}{\textwidth}{@{}l@{\extracolsep{\fill}}r@{}}
+    #1 & #2
+  \end{tabular*}\vspace{-1pt}
+}
+
+\newenvironment{cvitems}
+  {\begin{itemize}[leftmargin=1.25em,itemsep=1.5pt,topsep=2pt,parsep=0pt,partopsep=0pt]}
+  {\end{itemize}\vspace{2pt}}
+
+\begin{document}
+
+\begin{center}
+  {\Huge\bfseries Gabriel Dorosh}\\[4pt]
+  \href{mailto:gabriel@dorosh.co.uk}{\underline{gabriel@dorosh.co.uk}}
+  \enspace\textbar\enspace Maidenhead, UK
+  \enspace\textbar\enspace Full UK driving licence
+  \enspace\textbar\enspace Unrestricted UK right to work\\[2pt]
+  \href{https://gabrieldorosh.com}{\underline{gabrieldorosh.com}}
+  \enspace\textbar\enspace
+  \href{https://linkedin.com/in/gabrieldorosh}{\underline{linkedin.com/in/gabrieldorosh}}
+  \enspace\textbar\enspace
+  \href{https://github.com/gabrieldorosh}{\underline{github.com/gabrieldorosh}}
+\end{center}
+
+\section{Profile}
+Computer Science graduate with hands-on experience across full-stack development,
+machine learning, infrastructure, IT support, and customer-facing roles. Built a
+property-booking platform and a leakage-aware machine-learning pipeline using 63,010
+player-map records. Seeking software engineering, full-stack, backend, and data/ML
+roles where I can contribute practical problem-solving, critical thinking, and clear
+communication. Immediately available.
+
+\section{Technical Skills}
+\begin{tabularx}{\textwidth}{@{}>{\bfseries}l@{\hspace{0.65em}}X@{}}
+  Languages: & TypeScript, Python, SQL, JavaScript, HTML/CSS \\
+  Frameworks and Libraries: & React, Next.js, Astro, Node.js, Flask, pandas, NumPy, scikit-learn \\
+  Data, Tools and Integrations: & Prisma, MongoDB, Git, GitHub, Docker, OAuth, Resend, iCal/ICS, Cloudinary
+\end{tabularx}
+
+\section{Education}
+\entry{University of Reading}{Reading, UK}{BSc Computer Science}{Sept. 2023 -- Jul. 2026}
+\begin{cvitems}
+  \item Selected final module marks: Programming in C/C++ (87\%), Artificial
+    Intelligence and Machine Learning (83\%), Data Structures and Algorithms
+    (75\%), and Programming in Python (70\%).
+\end{cvitems}
+
+\entry{Sir William Borlase's Grammar School}{Marlow, UK}
+  {A Levels: Computer Science, Mathematics, Further Mathematics and Physics}
+  {Sept. 2014 -- Jun. 2021}
+
+\section{Experience}
+\entry{Rusutsu Resort International Ski School}{Rusutsu, Hokkaido, Japan}
+  {Certified Ski Instructor}{Nov. 2022 -- Apr. 2023}
+\begin{cvitems}
+  \item Delivered tailored lessons to international groups and to adults and
+    children, adapting plans to different abilities, goals, and learning styles.
+  \item Explained technical movements clearly and maintained guest safety and
+    satisfaction in a fast-paced environment, earning referrals and requests by
+    name from returning guests.
+  \item Earned additional ski-instruction qualifications during the season,
+    including NZSIA Children's Level 1.
+\end{cvitems}
+
+\entry{Quadranet Systems}{Stokenchurch, UK}{Support Analyst}{Jul. 2022 -- Sept. 2022}
+\begin{cvitems}
+  \item Provided first-line remote support for proprietary point-of-sale systems
+    used by hospitality clients, including The Ritz London.
+  \item Diagnosed networking, software, configuration, and printer-connectivity
+    issues; managed tickets, prioritised urgent incidents, and escalated them when
+    required.
+  \item Configured till layouts and connected devices to each client's operational
+    requirements, documenting a recurring printer issue and making repeat support
+    more efficient.
+\end{cvitems}
+
+\newpage
+\thispagestyle{fancy}
+
+\section{Selected Projects}
+\project{\textbf{\href{https://gabrieldorosh.com/projects/predictive-analysis/}{Counter-Strike Player Performance Prediction}}
+  \textbar{} \emph{Python, pandas, scikit-learn}}{2025 -- 2026}
+\begin{cvitems}
+  \item Built a reproducible machine-learning pipeline spanning collection,
+    cleaning, leakage-aware feature engineering, training, and evaluation across
+    63,010 player-map records from 1,795 players.
+  \item Engineered historical player, team, opponent, workload, and map-specific
+    features with chronological splitting and shifted histories to prevent data
+    leakage.
+  \item Compared classification and regression models; the selected ensemble
+    reached 0.630 test ROC-AUC, with methodology, results, and limitations
+    documented in the final technical report.
+\end{cvitems}
+
+\project{\textbf{\href{https://gabrieldorosh.com/projects/maidenhead-central/}{Maidenhead Central}}
+  \textbar{} \emph{TypeScript, Next.js, React, Prisma, MongoDB}}{2024 -- Present}
+\begin{cvitems}
+  \item Independently developed a property-booking platform designed to support
+    direct bookings and reduce reliance on third-party platforms.
+  \item Implemented credential and OAuth authentication, guest and host dashboards,
+    listing-management tools, booking requests, and conflict-aware reservation
+    workflows.
+  \item Automated Resend notifications and scheduled inbound iCal synchronisation;
+    integrated Prisma, MongoDB, and Cloudinary and deployed the development build
+    to Vercel.
+\end{cvitems}
+
+\project{\textbf{\href{https://gabrieldorosh.com/projects/nikos-nook/}{Niko's Nook}}
+  \textbar{} \emph{Owner and Technical Administrator}}{Nov. 2025 -- Present}
+\begin{cvitems}
+  \item Own and operate infrastructure for a global Minecraft community of 200+
+    members, typically supporting 5--20 concurrent players alongside nine volunteer
+    moderators.
+  \item Manage hosting, DNS, permissions, logs, security, plugin integrations,
+    performance, and capacity planning; maintain hourly offsite backups and
+    successfully restored the service after a hosting fault.
+\end{cvitems}
+
+\project{\textbf{\href{https://gabrieldorosh.com/projects/qr-code-generator/}{QR Code Generator}}
+  \textbar{} \emph{Python, Flask, Pillow}}{2025}
+\begin{cvitems}
+  \item Collaborated in a three-person coursework team to implement Version 1 and 2
+    QR encoding, Reed-Solomon error correction, matrix construction, all eight mask
+    patterns, and format information from the specification.
+  \item Integrated the shared pipeline into a Flask interface with custom colours,
+    module shapes, output sizing, construction-stage previews, and boundary
+    validation.
+\end{cvitems}
+
+\section{Volunteering}
+\entry{Maidenhead for Ukraine}{Maidenhead, UK and Ukraine}
+  {Volunteer Driver and Logistics Support}{Feb. 2022 -- Present}
+\begin{cvitems}
+  \item Drove essential aid from England across Europe into Ukraine for onward
+    distribution and continue supporting UK loading and logistics when available.
+\end{cvitems}
+
+\section{Additional Information}
+Available immediately and able to commute to London, Reading, and nearby locations
+by train or car. Elementary German; NZSIA Level 1 Ski Instructor; NZSIA Children's
+Level 1; SAJ Grade 2; AST Level 1.
+
+\end{document}

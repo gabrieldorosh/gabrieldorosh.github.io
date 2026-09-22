@@ -1,0 +1,495 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import { Image, getImage } from "astro:assets";
+import { ArrowLeft, ArrowRight, ExternalLink } from "@lucide/astro";
+import { siGithub } from "simple-icons";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import BrandIcon from "../../components/BrandIcon.astro";
+import IPhoneMockup from "../../components/IPhoneMockup.astro";
+import PredictiveEvidence from "../../components/PredictiveEvidence.astro";
+import SectionHeading from "../../components/SectionHeading.astro";
+import portfolioHomeDesktop from "../../assets/projects/portfolio-original-home-desktop.png";
+import portfolioProjectsDesktop from "../../assets/projects/portfolio-original-projects-desktop.png";
+import portfolioHomeMobile from "../../assets/projects/portfolio-original-home-mobile.png";
+import portfolioProjectsMobile from "../../assets/projects/portfolio-original-projects-mobile.png";
+import nikosNookLandscape from "../../assets/projects/nikos-nook-landscape.png";
+import nikosNookCommunity from "../../assets/projects/nikos-nook-community.png";
+import nikosNookChristmas from "../../assets/projects/nikos-nook-christmas.png";
+
+export async function getStaticPaths() {
+  const publishedProjects = (await getCollection("projects", ({ data }) => !data.draft)).sort(
+    (a, b) => a.data.order - b.data.order,
+  );
+  const listedProjects = publishedProjects.filter(({ data }) => data.listed);
+
+  return publishedProjects.map((project) => ({
+    params: { slug: project.id },
+    props: { project, projects: listedProjects },
+  }));
+}
+
+interface Props {
+  project: CollectionEntry<"projects">;
+  projects: CollectionEntry<"projects">[];
+}
+
+const { project, projects } = Astro.props;
+const { data } = project;
+const { Content } = await render(project);
+const projectIndex = projects.findIndex(({ id }) => id === project.id);
+const nextProject = projectIndex >= 0
+  ? projects[(projectIndex + 1) % projects.length]
+  : projects[0];
+const year = String(data.year);
+const isPredictiveAnalysis = project.id === "predictive-analysis";
+const documentIsExternal = Boolean(data.documentUrl && /^https?:\/\//.test(data.documentUrl));
+const socialImage = data.cover
+  ? await getImage({
+      src: data.cover,
+      width: 1200,
+      height: 630,
+      fit: "cover",
+      background: "#f4f2ed",
+      format: "jpg",
+      quality: 82,
+    })
+  : undefined;
+const caseScreenshots = project.id === "portfolio-design-build"
+  ? [
+      {
+        image: portfolioHomeDesktop,
+        label: "Original home · desktop",
+        alt: "Full-page desktop capture of Gabriel Dorosh's original portfolio home page",
+        caption: "Hero, biography, travel gallery, and personal links before the redesign.",
+        orientation: "landscape" as const,
+        viewLabel: "View full capture",
+      },
+      {
+        image: portfolioProjectsDesktop,
+        label: "Original projects · desktop",
+        alt: "Full-page desktop capture of Gabriel Dorosh's original projects page",
+        caption: "Featured-project and card-grid presentation before detailed case studies were added.",
+        orientation: "landscape" as const,
+        viewLabel: "View full capture",
+      },
+      {
+        image: portfolioHomeMobile,
+        label: "Original home · mobile",
+        alt: "Full-page mobile capture of Gabriel Dorosh's original portfolio home page",
+        caption: "The previous single-column home experience and full travel-card sequence.",
+        orientation: "portrait" as const,
+        viewLabel: "View full capture",
+      },
+      {
+        image: portfolioProjectsMobile,
+        label: "Original projects · mobile",
+        alt: "Full-page mobile capture of Gabriel Dorosh's original projects page",
+        caption: "The previous stacked project-card layout on a narrow screen.",
+        orientation: "portrait" as const,
+        viewLabel: "View full capture",
+      },
+    ]
+  : project.id === "nikos-nook"
+  ? [
+      {
+        image: nikosNookLandscape,
+        label: "Landscape",
+        alt: "Wide in-game landscape on the Niko's Nook Minecraft server",
+        caption: "Lakes, forests, snowy terrain, and beacon markers across the live world.",
+        orientation: "landscape" as const,
+        viewLabel: "View full image",
+      },
+      {
+        image: nikosNookCommunity,
+        label: "Community gathering",
+        alt: "Players gathered together on the Niko's Nook Minecraft server",
+        caption: "Six community members posing together beneath a cherry tree.",
+        orientation: "landscape" as const,
+        viewLabel: "View full image",
+      },
+      {
+        image: nikosNookChristmas,
+        label: "Seasonal gathering",
+        alt: "Players gathered in a festive area on the Niko's Nook Minecraft server",
+        caption: "A seasonal community moment captured on the server.",
+        orientation: "landscape" as const,
+        viewLabel: "View full image",
+      },
+    ]
+  : [];
+const caseScreenshotCopy = project.id === "nikos-nook"
+  ? {
+      eyebrow: "Server gallery",
+      title: "Inside Niko's Nook",
+      description: "A selection of in-game places and community moments from the server.",
+    }
+  : {
+      eyebrow: "Project evidence",
+      title: "The original portfolio, before the redesign",
+      description: "Full-page reference captures of the previous home and projects pages on desktop and mobile.",
+    };
+
+const pipelineSteps = [
+  "HLTV player-map pages",
+  "Cached raw player-map records",
+  "Cleaning, target construction and leakage-aware feature engineering",
+  "Chronological training, validation and test split",
+  "Classification and regression experiments",
+  "ROC-AUC, balanced accuracy, F1, MAE, RMSE and R²",
+];
+---
+
+<BaseLayout
+  title={data.title}
+  description={data.seoDescription ?? data.summary}
+  socialImage={socialImage?.src}
+  socialImageAlt={data.cover ? `${data.title} project preview` : undefined}
+  socialImageWidth={socialImage ? 1200 : undefined}
+  socialImageHeight={socialImage ? 630 : undefined}
+  socialImageType={socialImage ? "image/jpeg" : undefined}
+  noindex={!data.listed}
+>
+  <article class:list={["case-study", `case-study--${project.id}`]} style={`--project-accent: ${data.accent}`}>
+    <header class="case-hero">
+      <div class="container">
+        <a class="case-hero__breadcrumb" href="/projects/">
+          <ArrowLeft aria-hidden="true" size={15} stroke-width={2} />
+          All work
+        </a>
+        <div class="case-hero__grid">
+          <div class="case-hero__copy" data-reveal>
+            <p class="eyebrow">{data.type} <span aria-hidden="true">/</span> {year}</p>
+            <h1>{data.title}</h1>
+            <p class="case-hero__summary">{data.summary}</p>
+          </div>
+          {
+            (data.documentUrl || data.liveUrl || data.repoUrl) && (
+              <div class="case-hero__links" data-reveal style="--card-index: 1">
+                {data.documentUrl && (
+                  <a
+                    class="button button--primary"
+                    href={data.documentUrl}
+                    target={documentIsExternal ? "_blank" : undefined}
+                    rel={documentIsExternal ? "noopener noreferrer" : undefined}
+                  >
+                    {data.documentLabel ?? "View document"}
+                    {documentIsExternal && <ExternalLink aria-hidden="true" size={15} stroke-width={2} />}
+                  </a>
+                )}
+                {data.liveUrl && (
+                  <a class="button button--primary" href={data.liveUrl} target="_blank" rel="noopener noreferrer">
+                    {data.liveLabel ?? "View live project"}
+                    <ExternalLink aria-hidden="true" size={15} stroke-width={2} />
+                  </a>
+                )}
+                {data.repoUrl && (
+                  <a class="button button--secondary" href={data.repoUrl} target="_blank" rel="noopener noreferrer">
+                    View source
+                    <BrandIcon icon={siGithub} size={15} />
+                  </a>
+                )}
+              </div>
+            )
+          }
+        </div>
+      </div>
+    </header>
+
+    {
+      isPredictiveAnalysis && data.cover && (
+        <div class="case-cover case-cover--cover" data-reveal>
+          <Image
+            src={data.cover}
+            alt="Counter-Strike 2 banner featuring two in-game character models"
+            widths={[720, 1000, 1400, 1800]}
+            sizes="(max-width: 1320px) calc(100vw - 2rem), 1240px"
+            loading="eager"
+          />
+        </div>
+      )
+    }
+
+    {
+      isPredictiveAnalysis ? (
+        <>
+          <section class="case-diagram" aria-label="Predictive analysis workflow" data-reveal>
+            <div class="case-diagram__heading">
+              <span>Project workflow</span>
+              <span>From public pages to chronological evaluation</span>
+            </div>
+            <ol>
+              {pipelineSteps.map((step, index) => (
+                <li>
+                  <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                  <strong>{step}</strong>
+                </li>
+              ))}
+            </ol>
+          </section>
+          <PredictiveEvidence />
+        </>
+      ) : (
+        <div class:list={["case-cover", `case-cover--${data.coverFit}`]} data-reveal>
+          {
+            data.cover ? (
+              <Image
+                src={data.cover}
+                alt={`${data.title} project preview`}
+                widths={[720, 1000, 1400, 1800]}
+                sizes="(max-width: 1320px) calc(100vw - 2rem), 1240px"
+                loading="eager"
+              />
+            ) : (
+              <div class="case-cover__fallback">
+                <span>Interactive web project</span>
+                <strong>{data.shortTitle}</strong>
+              </div>
+            )
+          }
+        </div>
+      )
+    }
+
+    {
+      data.phoneScreens.length > 0 && (
+        <section class="phone-gallery-section">
+          <div class="container">
+            <SectionHeading
+              eyebrow="Mobile experience"
+              title="A closer look at the responsive interface"
+              description="The mobile views keep property browsing, date selection, and host-management tasks readable on a narrow screen."
+              align="center"
+            />
+            <div class="phone-grid">
+              {data.phoneScreens.map((screen, index) => (
+                <IPhoneMockup screen={screen} accent={data.accent} index={index} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    <div class="container">
+      <dl class="case-meta" data-reveal>
+        <div class="case-meta__item">
+          <dt>Project</dt>
+          <dd>{data.type}</dd>
+        </div>
+        <div class="case-meta__item">
+          <dt>Role</dt>
+          <dd>{data.role}</dd>
+        </div>
+        <div class="case-meta__item">
+          <dt>Year</dt>
+          <dd>{year}</dd>
+        </div>
+        <div class="case-meta__item">
+          <dt>Focus</dt>
+          <dd>{data.technologies.slice(0, 2).join(" / ")}</dd>
+        </div>
+      </dl>
+
+      <div class="case-body">
+        <aside class="case-body__aside" aria-label="Project technologies" data-reveal>
+          <p>Built with</p>
+          <ul class="tag-list">
+            {data.technologies.map((technology) => <li>{technology}</li>)}
+          </ul>
+        </aside>
+        <div class="prose" data-reveal style="--card-index: 1">
+          <Content />
+        </div>
+      </div>
+    </div>
+
+    {
+      caseScreenshots.length > 0 && (
+        <section class="case-screenshots">
+          <div class="container">
+            <SectionHeading
+              eyebrow={caseScreenshotCopy.eyebrow}
+              title={caseScreenshotCopy.title}
+              description={caseScreenshotCopy.description}
+            />
+            <div class="case-screenshots__grid">
+              {caseScreenshots.map((screen) => (
+                <figure class:list={["case-screenshot", `is-${screen.orientation}`]} data-reveal>
+                  <div class="case-screenshot__bar" aria-hidden="true">
+                    <span></span><span></span><span></span>
+                  </div>
+                  <div class="case-screenshot__viewport">
+                    <Image
+                      src={screen.image}
+                      alt={screen.alt}
+                      widths={screen.orientation === "portrait" ? [320, 430] : [720, 1200, 1800]}
+                      sizes={screen.orientation === "portrait"
+                        ? "(max-width: 760px) 78vw, 22rem"
+                        : "(max-width: 760px) calc(100vw - 3rem), 40vw"}
+                      loading="lazy"
+                    />
+                  </div>
+                  <figcaption>
+                    <div>
+                      <strong>{screen.label}</strong>
+                      <span>{screen.caption}</span>
+                    </div>
+                    <a href={screen.image.src} target="_blank" rel="noopener noreferrer">
+                      {screen.viewLabel}
+                      <ExternalLink aria-hidden="true" size={14} stroke-width={2} />
+                    </a>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    {
+      nextProject && (
+        <nav class="next-project" aria-label="Next case study">
+          <div class="container">
+            <a class="next-project__link" href={`/projects/${nextProject.id}/`}>
+              <span>Next case study</span>
+              <span class="next-project__title">{nextProject.data.title}</span>
+              <span class="next-project__arrow" aria-hidden="true">
+                <ArrowRight size={26} stroke-width={1.8} />
+              </span>
+            </a>
+          </div>
+        </nav>
+      )
+    }
+  </article>
+</BaseLayout>
+
+<style>
+  .case-screenshots {
+    padding-block: clamp(4.5rem, 8vw, 7rem);
+    border-top: 1px solid var(--line);
+    background: color-mix(in srgb, var(--project-accent) 6%, var(--paper-deep));
+  }
+
+  .case-screenshots__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1rem, 3vw, 2rem);
+    align-items: start;
+  }
+
+  .case-screenshot {
+    overflow: hidden;
+    margin: 0;
+    border: 1px solid var(--line);
+    border-radius: 0.7rem;
+    background: var(--surface);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .case-screenshot.is-portrait {
+    width: min(100%, 22rem);
+    justify-self: center;
+  }
+
+  .case-screenshot__bar {
+    display: flex;
+    gap: 0.32rem;
+    align-items: center;
+    height: 1.75rem;
+    padding-inline: 0.75rem;
+    border-bottom: 1px solid var(--line);
+    background: var(--paper-deep);
+  }
+
+  .case-screenshot__bar span {
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: var(--line-strong);
+  }
+
+  .case-screenshot__bar span:first-child {
+    background: color-mix(in srgb, var(--project-accent) 68%, var(--line));
+  }
+
+  .case-screenshot__viewport {
+    overflow: auto;
+    aspect-ratio: 16 / 10;
+    background: #eef2f4;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+
+  .case-screenshot.is-portrait .case-screenshot__viewport {
+    aspect-ratio: 9 / 16;
+  }
+
+  .case-study--nikos-nook .case-screenshot__viewport {
+    aspect-ratio: 16 / 9;
+  }
+
+  .case-screenshot__viewport :global(picture) {
+    display: contents;
+  }
+
+  .case-screenshot__viewport :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .case-screenshot figcaption {
+    display: flex;
+    gap: 1rem;
+    align-items: end;
+    justify-content: space-between;
+    padding: 1rem;
+  }
+
+  .case-screenshot figcaption > div {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .case-screenshot figcaption strong {
+    font-size: 0.84rem;
+  }
+
+  .case-screenshot figcaption span {
+    color: var(--muted);
+    font-size: 0.72rem;
+    line-height: 1.45;
+  }
+
+  .case-screenshot figcaption a {
+    display: inline-flex;
+    flex: 0 0 auto;
+    gap: 0.35rem;
+    align-items: center;
+    color: var(--project-accent-ink);
+    font-size: 0.7rem;
+    font-weight: 750;
+    white-space: nowrap;
+  }
+
+  @media (min-width: 761px) {
+    .case-study--nikos-nook .case-screenshot:last-child {
+      grid-column: 1 / -1;
+      width: calc(50% - clamp(0.5rem, 1.5vw, 1rem));
+      justify-self: center;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .case-screenshots__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .case-screenshot figcaption {
+      display: grid;
+      align-items: start;
+    }
+  }
+</style>

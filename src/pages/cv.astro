@@ -1,0 +1,60 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteConfig } from "../config/site";
+import { Download, ExternalLink } from "@lucide/astro";
+---
+
+<BaseLayout
+  title="CV"
+  description="View or download Gabriel Dorosh's CV, covering software development experience, Python and web skills, machine-learning research, and selected projects."
+>
+  <section class="page-hero page-hero--cv">
+    <div class="container page-hero__inner">
+      <div data-reveal>
+        <p class="eyebrow">Curriculum vitae</p>
+        <h1>My experience, skills, and projects</h1>
+      </div>
+      <div class="page-hero__aside" data-reveal style="--card-index: 1">
+        <p>
+          Read the two-page CV below, or open and download the PDF for a closer look.
+        </p>
+        <div class="cv-page__actions">
+          <a
+            class="button button--primary"
+            href={siteConfig.cv.path}
+            target="_blank"
+            rel="noopener"
+          >
+            Open PDF
+            <ExternalLink aria-hidden="true" size={15} stroke-width={2} />
+          </a>
+          <a class="button button--secondary" href={siteConfig.cv.path} download>
+            Download PDF
+            <Download aria-hidden="true" size={15} stroke-width={2} />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cv-page">
+    <div class="container">
+      <div class="cv-pages" data-reveal role="group" aria-label="CV preview, two pages">
+        <img
+          src="/downloads/gabriel-dorosh-cv-page-1.png"
+          alt="Gabriel Dorosh CV, page 1 of 2"
+          width="1191"
+          height="1684"
+          loading="eager"
+        />
+        <img
+          src="/downloads/gabriel-dorosh-cv-page-2.png"
+          alt="Gabriel Dorosh CV, page 2 of 2"
+          width="1191"
+          height="1684"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,28 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  href?: string;
+  linkLabel?: string;
+  align?: "left" | "center";
+}
+
+const {
+  eyebrow,
+  title,
+  description,
+  href,
+  linkLabel = "View all",
+  align = "left",
+} = Astro.props;
+---
+
+<header class:list={["section-heading", `section-heading--${align}`]} data-reveal>
+  <div class="section-heading__copy">
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    <h2>{title}</h2>
+    {description && <p>{description}</p>}
+  </div>
+  {href && <a class="text-link" href={href}>{linkLabel}</a>}
+</header>

@@ -1,0 +1,260 @@
+---
+import { siteConfig } from "../config/site";
+
+interface Props {
+  theme?: "default" | "gaming";
+}
+
+const { theme = "default" } = Astro.props;
+const currentPath = Astro.url.pathname;
+const normalizePath = (path: string) => (path === "/" ? path : path.replace(/\/+$/, ""));
+const normalizedCurrentPath = normalizePath(currentPath);
+const isActive = (href: string) => {
+  const normalizedHref = normalizePath(href);
+  return normalizedHref === "/"
+    ? normalizedCurrentPath === "/"
+    : normalizedCurrentPath === normalizedHref ||
+        normalizedCurrentPath.startsWith(`${normalizedHref}/`);
+};
+
+const primaryLinks = [
+  { href: "/", label: "Home" },
+  { href: "/projects/", label: "Work" },
+  { href: "/about/", label: "About" },
+  { href: "/cv/", label: "CV" },
+];
+
+const socialLinks = [
+  { href: siteConfig.social.linkedin, label: "LinkedIn" },
+  { href: siteConfig.social.github, label: "GitHub" },
+];
+---
+
+<header
+  class:list={[
+    "site-header",
+    {
+      "site-header--gaming": theme === "gaming",
+      "is-name-visible": currentPath !== "/",
+    },
+  ]}
+>
+  <div class="site-header__inner">
+    <nav class="desktop-nav site-header__primary" aria-label="Main navigation">
+      {
+        primaryLinks.map((link) => (
+          <a
+            href={link.href}
+            class:list={{ "is-active": isActive(link.href) }}
+            aria-current={isActive(link.href) ? "page" : undefined}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+      <a
+        class:list={[
+          "secret-nav-link",
+          {
+            "is-active": theme === "gaming",
+            "is-revealed": theme === "gaming",
+          },
+        ]}
+        href="/gaming/"
+        aria-label="Gaming"
+        aria-current={theme === "gaming" ? "page" : undefined}
+      >
+        <span class="secret-nav-link__label">Gaming</span>
+      </a>
+    </nav>
+
+    <a
+      class="site-header__name"
+      href="/"
+      aria-label="Gabriel Dorosh — home"
+      aria-hidden={currentPath === "/" ? "true" : "false"}
+      tabindex={currentPath === "/" ? "-1" : undefined}
+      data-header-name
+      data-secret-trigger
+    >
+      Gabriel Dorosh
+    </a>
+
+    <div class="site-header__right">
+      <nav class="site-header__socials" aria-label="Social links">
+        {
+          socialLinks.map((link) => (
+            <a href={link.href} target="_blank" rel="noopener noreferrer">{link.label}</a>
+          ))
+        }
+      </nav>
+
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="mobile-navigation"
+        aria-label="Open menu"
+      >
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-nav" id="mobile-navigation" hidden>
+    <nav aria-label="Mobile navigation">
+      {
+        primaryLinks.map((link, index) => (
+          <a
+            href={link.href}
+            class:list={{ "is-active": isActive(link.href) }}
+            aria-current={isActive(link.href) ? "page" : undefined}
+            style={`--menu-index: ${index}`}
+          >
+            <span aria-hidden="true">0{index + 1}</span>
+            {link.label}
+          </a>
+        ))
+      }
+      {
+        socialLinks.map((link, index) => (
+          <a
+            href={link.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={`--menu-index: ${index + primaryLinks.length}`}
+          >
+            <span aria-hidden="true">0{index + primaryLinks.length + 1}</span>
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>(".site-header");
+  const headerName = header?.querySelector<HTMLAnchorElement>("[data-header-name]");
+  const toggle = header?.querySelector<HTMLButtonElement>(".menu-toggle");
+  const mobileNavigation = header?.querySelector<HTMLElement>(".mobile-nav");
+  const headerThreshold = document.querySelector<HTMLElement>("[data-header-threshold]");
+  const mobileHeader = window.matchMedia("(max-width: 760px)");
+
+  const closeMenu = (restoreFocus = false) => {
+    if (!toggle || !mobileNavigation) return;
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-label", "Open menu");
+    mobileNavigation.hidden = true;
+    document.body.classList.remove("menu-open");
+    if (restoreFocus) toggle.focus();
+  };
+
+  toggle?.addEventListener("click", () => {
+    if (!mobileNavigation) return;
+    const willOpen = toggle.getAttribute("aria-expanded") !== "true";
+    toggle.setAttribute("aria-expanded", String(willOpen));
+    toggle.setAttribute("aria-label", willOpen ? "Close menu" : "Open menu");
+    mobileNavigation.hidden = !willOpen;
+    document.body.classList.toggle("menu-open", willOpen);
+
+    if (willOpen) {
+      mobileNavigation.querySelector<HTMLAnchorElement>("a")?.focus();
+    }
+  });
+
+  mobileNavigation?.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => closeMenu());
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && toggle?.getAttribute("aria-expanded") === "true") {
+      closeMenu(true);
+      return;
+    }
+
+    if (
+      event.key !== "Tab" ||
+      toggle?.getAttribute("aria-expanded") !== "true" ||
+      !mobileNavigation
+    ) {
+      return;
+    }
+
+    const focusable = [
+      toggle,
+      ...mobileNavigation.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      ),
+    ].filter((element): element is HTMLElement => Boolean(element));
+
+    const firstFocusable = focusable[0];
+    const lastFocusable = focusable[focusable.length - 1];
+
+    if (event.shiftKey && document.activeElement === firstFocusable) {
+      event.preventDefault();
+      lastFocusable?.focus();
+    } else if (!event.shiftKey && document.activeElement === lastFocusable) {
+      event.preventDefault();
+      firstFocusable?.focus();
+    }
+  });
+
+  let nameFrame: number | undefined;
+
+  const updateNameVisibility = () => {
+    nameFrame = undefined;
+    if (!header) return;
+
+    const isVisible =
+      mobileHeader.matches ||
+      !headerThreshold ||
+      headerThreshold.getBoundingClientRect().bottom <= header.getBoundingClientRect().bottom;
+
+    header.classList.toggle("is-name-visible", isVisible);
+    headerName?.setAttribute("aria-hidden", String(!isVisible));
+
+    if (isVisible) {
+      headerName?.removeAttribute("tabindex");
+    } else {
+      headerName?.setAttribute("tabindex", "-1");
+    }
+  };
+
+  const queueNameVisibilityUpdate = () => {
+    if (nameFrame !== undefined) return;
+    nameFrame = window.requestAnimationFrame(updateNameVisibility);
+  };
+
+  queueNameVisibilityUpdate();
+  window.addEventListener("scroll", queueNameVisibilityUpdate, { passive: true });
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 760) closeMenu();
+    queueNameVisibilityUpdate();
+  });
+
+  const secretTrigger = header?.querySelector<HTMLElement>("[data-secret-trigger]");
+  let secretTimer: number | undefined;
+
+  const cancelSecret = () => {
+    if (secretTimer !== undefined) window.clearTimeout(secretTimer);
+    secretTimer = undefined;
+  };
+
+  secretTrigger?.addEventListener("pointerdown", (event) => {
+    if (event.pointerType === "mouse" || !window.matchMedia("(max-width: 760px)").matches) return;
+    cancelSecret();
+    secretTimer = window.setTimeout(() => {
+      window.location.href = "/gaming/";
+    }, 1200);
+  });
+
+  ["pointerup", "pointercancel", "pointerleave"].forEach((eventName) => {
+    secretTrigger?.addEventListener(eventName, cancelSecret);
+  });
+
+  secretTrigger?.addEventListener("contextmenu", (event) => {
+    if (window.matchMedia("(max-width: 760px)").matches) event.preventDefault();
+  });
+</script>
