@@ -8,86 +8,86 @@ import { ArrowRight, ArrowUpRight } from "@lucide/astro";
 import portrait from "../assets/about/portrait-japan-selfie.jpeg";
 import japanVan from "../assets/travel/japan_van.png";
 import japanView from "../assets/travel/japan_view.jpg";
-import kyoto from "../assets/travel/kyoto.JPG";
+import kyoto from "../assets/travel/kyoto.jpg";
 import austrianAlps from "../assets/travel/austrian-alps.jpg";
 import england from "../assets/travel/england.jpg";
 import amsterdam from "../assets/travel/amsterdam.jpg";
 import sapporo from "../assets/travel/sapporo.jpg";
 import dorms from "../assets/travel/dorms.jpg";
-import nara from "../assets/travel/nara.JPG";
+import nara from "../assets/travel/nara.jpg";
 
 const travelStories = [
   {
     image: japanVan,
     alt: "A van used while travelling across Japan",
     rotation: -2.2,
-    title: "Our little kei van",
-    date: "Japan · Summer 2023",
-    description: "We drove this kei van from Hokkaido to Kyushu, using it as both transport and home along the way.",
+    title: "Living in a tiny kei van",
+    date: "Rusutsu, JP · 2023",
+    description: "My girlfriend, Paige, and I spent a summer living and driving in this van, experiencing japanese culture firsthand. It's a good thing she's so short.",
   },
   {
     image: japanView,
     alt: "A mountain view from a ski resort in Japan",
     rotation: 1.4,
-    title: "First tracks above the clouds",
-    date: "Japan · Winter 2022",
-    description: "One of the clearest mornings of my ski season, with fresh snow and the clouds sitting below the resort.",
+    title: "Cloudy mornings before starting work",
+    date: "Rusutsu, JP · 2022",
+    description: "Early morning views from the resort I worked at in Rusutsu. You had to hike up before the lifts opened for it to be so quiet.",
   },
   {
     image: kyoto,
     alt: "A street scene in Kyoto",
     rotation: -0.8,
-    title: "Evening walk in Kyoto",
-    date: "Kyoto · Summer 2023",
-    description: "A street I photographed during an evening walk through Kyoto.",
+    title: "Visiting Kyoto",
+    date: "Kyoto, JP · 2023",
+    description: "Kyoto was one of the most beautiful cities we visited, there was a lot to see and do around here.",
   },
   {
     image: austrianAlps,
     alt: "Snow-covered mountains in the Austrian Alps",
     rotation: 2.1,
-    title: "Winter in the Austrian Alps",
-    date: "Austria · Winter",
-    description: "I learned to ski in these mountains near my family and still return whenever I can.",
+    title: "The Austrian Alps",
+    date: "Goldegg, AT · 2016",
+    description: "This is one of the mountains I learned to ski on, I've been coming up these mountains since I was fourteen. The person in green and blue is my uncle, these mountains are local to him.",
   },
   {
     image: england,
     alt: "A countryside walk in England",
     rotation: -1.5,
-    title: "A slower pace in England",
-    date: "England · Spring 2024",
-    description: "A long countryside walk close to home between bigger trips.",
+    title: "Riverside walks at home",
+    date: "Marlow, UK · 2024",
+    description: "Not everything has to be so far away, when I'm home I enjoy walking my dog along the river and through the countryside. There are some beautiful views.",
   },
   {
     image: amsterdam,
     alt: "A canal-side view in Amsterdam",
     rotation: 1.1,
-    title: "Canals at dusk",
-    date: "Amsterdam · April 2025",
-    description: "Canals, bicycles, and the last light of an April evening.",
+    title: "The canals of Amsterdam",
+    date: "Amsterdam, NL · 2025",
+    description: "We had a brief stay in Amsterdam, the city was really fun to explore and had many great photo opportunities. So many cyclists though, maybe too many.",
   },
   {
     image: sapporo,
     alt: "Bells at the top of a mountain near Sapporo",
     rotation: -1.9,
-    title: "Summit bells near Sapporo",
-    date: "Hokkaido · January 2023",
-    description: "Bells at the top of a mountain near Sapporo in the middle of a Hokkaido winter.",
+    title: "The Bell of Happiness",
+    date: "Sapporo, JP · 2023",
+    description: "This bell is at the top of Mt. Moiwa in Sapporo. My girlfriend and I were visiting Sapporo for the weekend to commemorate the anniversary of our first year together.",
   },
   {
     image: dorms,
     alt: "A ski-resort dorm room",
     rotation: 0.8,
-    title: "Dorm life at the ski resort",
-    date: "Japan · December 2022",
-    description: "The staff dorm was cramped and cold, but sharing it with the other instructors was part of the season.",
+    title: "The spacious and luxurious staff dorms",
+    date: "Rusutsu, JP · 2022",
+    description: "The dorm I shared with some of the other instructors at the resort was ever so slightly crowded. This photo was taken before the other five moved in.",
   },
   {
     image: nara,
     alt: "Deer in Nara Park, Japan",
     rotation: -1.2,
-    title: "Morning with the deer in Nara",
-    date: "Nara · June 2023",
-    description: "Deer roaming through Nara Park on one of our mornings in the city.",
+    title: "Nara Park and it's residents",
+    date: "Nara, JP · 2023",
+    description: "The deer in Nara Park were normally respectful and even bowed, but some of them could sense the weakness in my girlfriend and would chase and nip at her until she gave over her food.",
   },
 ];
 ---
@@ -100,11 +100,10 @@ const travelStories = [
     <div class="container page-hero__inner">
       <div data-reveal>
         <p class="eyebrow">About</p>
-        <h1>A little more about me</h1>
+        <h1>More about me and where I've been</h1>
       </div>
       <p class="page-hero__intro" data-reveal style="--card-index: 1">
-        I learned to ski in the Austrian Alps, taught skiing in Japan, and travelled
-        the country in a kei van.
+        I do actually go outside, and here is proof. Here, you can find some pictures I've taken of pretty places and moments I've loved.
       </p>
     </div>
   </section>
@@ -125,23 +124,23 @@ const travelStories = [
       </figure>
 
       <div class="about-intro__copy" data-reveal style="--card-index: 1">
-        <p class="eyebrow">Beyond the work</p>
-        <h2>From the Austrian Alps to a ski season in Japan</h2>
+        <!-- <p class="eyebrow">Beyond the work</p> -->
+        <h2>How I spent my time living in Japan</h2>
         <p>
-          I learned to ski in the Austrian Alps near my family and spent summers
-          working at my family's white-water rafting centre. Between changing
-          conditions and looking after guests, I learned to communicate clearly,
-          share responsibility, and make decisions quickly.
+          I learned to ski in the Austrian Alps near my family and spent summers working at my 
+          family's white-water rafting centre. Between changing conditions and looking after 
+          guests, I learned to communicate clearly, share responsibility, and make decisions 
+          quickly.
         </p>
         <p>
-          I later spent a season in Japan as a ski instructor. Teaching international
-          guests at temperatures as low as -20°C, often in heavy snowfall, meant
-          changing each lesson to suit the person and the conditions in front of us.
+          I later spent a season in Japan as a ski instructor. Teaching international guests at 
+          temperatures as low as -20°C, often in heavy snowfall, meant changing each lesson 
+          to suit the person and the conditions in front of us.
         </p>
         <p>
-          After the season, my girlfriend and I travelled from Hokkaido to Kyushu and
-          back in a tiny kei van. Living out of the van kept the trip slow, cheap, and
-          close to everyday life.
+          After the season, my girlfriend and I travelled from Hokkaido to the bottom of Honshu 
+          and back in a tiny kei van. Living out of the van kept the trip slow, cheap, and close to 
+          everyday life. We really got to experience all of Japan.
         </p>
         <div class="about-intro__actions" role="group" aria-label="Contact and CV">
           <a class="text-link" href={`mailto:${siteConfig.email}`}>
@@ -165,9 +164,9 @@ const travelStories = [
   <section class="section travel-section">
     <div class="container">
       <SectionHeading
-        eyebrow="Travel log"
-        title="Places I still think about"
-        description="Nine photographs from Japan, Austria, England, and Amsterdam."
+        eyebrow="Photo dump"
+        title="Pictures that tell stories"
+        description="A collection of photographs from memorable moments in my life."
       />
       <div class="travel-grid">
         {

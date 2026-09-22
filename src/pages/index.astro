@@ -10,7 +10,7 @@ import portrait from "../assets/about/portrait-lego.jpeg";
 import heroBackground from "../assets/hero/hero-background.jpg";
 import japanVan from "../assets/travel/japan_van.png";
 import austrianAlps from "../assets/travel/austrian-alps.jpg";
-import nara from "../assets/travel/nara.JPG";
+import nara from "../assets/travel/nara.jpg";
 
 const publishedProjects = (await getCollection("projects", ({ data }) => !data.draft && data.listed)).sort(
   (a, b) => a.data.order - b.data.order,
@@ -22,21 +22,21 @@ const secondaryProjects = featuredProjects.slice(1);
 const homePolaroids = [
   {
     image: japanVan,
-    title: "The tiny kei van we lived in during our year abroad in Japan",
-    date: "2023",
+    title: "Inside our kei van we spent a summer living and travelling in",
+    date: "2022",
     alt: "A van used while travelling across Japan",
     rotation: -3.2,
   },
   {
     image: austrianAlps,
-    title: "The Austrian Alps, where I learned to ski",
-    date: "Austria · Winter",
+    title: "The view from the top of the Austrian Alps",
+    date: "2016",
     alt: "Snow-covered mountains in the Austrian Alps",
     rotation: 2.4,
   },
   {
     image: nara,
-    title: "Feeding the deer in Nara Park",
+    title: "The very respectful deer found in Nara Park",
     date: "2023",
     alt: "Deer in Nara Park, Japan",
     rotation: -1.1,
@@ -56,13 +56,11 @@ const homePolaroids = [
         <p class="eyebrow">BSc Computer Science graduate</p>
         <h1 id="home-title">Gabriel Dorosh</h1>
         <p class="home-hero__tagline">
-          Software developer working across full-stack products, backend systems,
-          and applied machine learning.
+          Passionate computer science graduate and software engineer working on applied machine learning, backend, and full-stack dev.
         </p>
         <p class="home-hero__intro">
-          My recent work includes a Counter-Strike prediction study built from
-          63,010 player-map records, a property-booking platform, and infrastructure
-          for a 200+ member community.
+          Recently, I have completed my a predictive analysis dissertation on upcoming Counter-Strike performance, built on a dataset of 63,010 player-map records, a property-booking platform, 
+          and infrastructure for a 250+ member gaming community.
         </p>
         <p class="home-hero__location">Based in Maidenhead, UK · Open to relocation</p>
       </div>
@@ -90,11 +88,11 @@ const homePolaroids = [
   <section class="section home-work">
     <div class="container">
       <SectionHeading
-        eyebrow="Selected work"
-        title="Three projects, three different problems"
-        description="A dissertation built around chronological evaluation, a property-booking platform, and a QR encoder implemented from the specification."
+        eyebrow="Featured projects"
+        title="A few of my favourite projects"
+        description="Featuerd here is my predictive analysis dissertation, a full-stack property-booking platform, and a QR encoder implemented from a given specification."
         href="/projects/"
-        linkLabel={<>View all projects <ArrowRight class="text-link__icon" aria-hidden="true" size={15} stroke-width={2} /></>}
+        linkLabel={<>View all my projects <ArrowRight class="text-link__icon" aria-hidden="true" size={15} stroke-width={2} /></>}
       />
 
       <div class="project-showcase">
@@ -115,15 +113,14 @@ const homePolaroids = [
   <section class="section home-personal">
     <div class="container home-personal__grid">
       <div class="home-personal__copy" data-reveal>
-        <p class="eyebrow">Outside work</p>
-        <h2>Mountains, travel, and teaching</h2>
+        <!-- <p class="eyebrow">More than just code</p> -->
+        <h2>Travelling, mountains, and more</h2>
         <p>
-          I learned to ski in the Austrian Alps, spent summers at my family's
-          white-water rafting centre, and later taught skiing in Japan. I also
-          travelled from Hokkaido to Kyushu in a tiny kei van.
+          I spent summers at my uncle's white-water rafting centre, during the winters I learned to ski with him and my cousins in the Austrian Alps. 
+          I've also spent a season teaching skiing in Japan and for the rest of the year I was travelling from tip to toe of the country in a tiny kei van.
         </p>
         <a class="text-link" href="/about/">
-          More about me
+          Find out more about me
           <ArrowRight class="text-link__icon" aria-hidden="true" size={15} stroke-width={2} />
         </a>
       </div>
